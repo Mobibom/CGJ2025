@@ -266,7 +266,7 @@ public class FillColorGame : MonoBehaviour
                 Vector2Int direction = new Vector2Int(x - currentPosition.x, y - currentPosition.y);
 
                 Debug.Log($"选择方向: {direction} {x} {y} {hit.point}");
-                if (IsValidDirection(direction))
+                while (IsValidDirection(direction))
                 {
                     MoveToDirection(direction);
                 }
