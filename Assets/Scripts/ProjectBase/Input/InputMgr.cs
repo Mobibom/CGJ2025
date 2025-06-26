@@ -41,6 +41,11 @@ public class InputMgr : BaseManager<InputMgr>
             EventCenter.GetInstance().EventTrigger("某键抬起", key);
     }
 
+    private void MouseMove()
+    {
+        EventCenter.GetInstance().EventTrigger("鼠标移动", Input.mousePosition);
+    }
+
     private void MyUpdate()
     {
         //没有开启输入检测 就不去检测 直接return
@@ -55,6 +60,6 @@ public class InputMgr : BaseManager<InputMgr>
         CheckKeyCode(KeyCode.Mouse1);
         CheckKeyCode(KeyCode.Escape);
         CheckKeyCode(KeyCode.B);
+        MouseMove();
     }
-	
 }

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DemoRoomScene.unity
     guid: e091db971eafe154b86e551b0c8576aa
+  - enabled: 1
+    path: Assets/Scenes/FillColorGameScene.unity
+    guid: 7ec47ef8098cc4afaaccf4de59256eaa
   m_configObjects: {}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine.Rendering;
 
 [System.Serializable]
@@ -29,23 +30,13 @@ public class FillColorGame : MonoBehaviour
     private int filledCount = 0;
     private Vector2Int currentPosition;
     private List<Vector2Int> availableDirections = new List<Vector2Int>();
-
-    private bool m_IsMouseEntered = false;
-
-    public void OnMouseEnter()
-    {
-        m_IsMouseEntered = true;
-    }
-
-    public void OnMouseExit()
-    {
-        m_IsMouseEntered = false;
-    }
+    private GameObject cursor;
 
     // Start is called before the first frame update
     void Start()
     {
         EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
+        EventCenter.GetInstance().AddEventListener<Vector3>("鼠标移动", OnMouseMove);
         InitializeGame();
     }
 
@@ -101,8 +92,8 @@ public class FillColorGame : MonoBehaviour
         List<Vector2Int> directions = new List<Vector2Int>();
 
         // 检查上、下、左、右四个方向
-        if (IsWithinBounds(x, y - 1) && !gameGrid[x, y - 1].isFilled) directions.Add(Vector2Int.up); // 上
-        if (IsWithinBounds(x, y + 1) && !gameGrid[x, y + 1].isFilled) directions.Add(Vector2Int.down); // 下
+        if (IsWithinBounds(x, y - 1) && !gameGrid[x, y - 1].isFilled) directions.Add(Vector2Int.down); // 上
+        if (IsWithinBounds(x, y + 1) && !gameGrid[x, y + 1].isFilled) directions.Add(Vector2Int.up); // 下
         if (IsWithinBounds(x - 1, y) && !gameGrid[x - 1, y].isFilled) directions.Add(Vector2Int.left); // 左
         if (IsWithinBounds(x + 1, y) && !gameGrid[x + 1, y].isFilled) directions.Add(Vector2Int.right); // 右
 
@@ -125,37 +116,61 @@ public class FillColorGame : MonoBehaviour
         }
     }
 
+
+    private void OnMouseMove(Vector3 mousePosition)
+    {
+        // 创建光标对象（如果不存在）
+        if (cursor == null)
+        {
+            cursor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            cursor.name = "Cursor";
+            cursor.transform.parent = transform;
+            cursor.transform.localScale = new Vector3(0.5f, 0.5f, 0.1f);
+
+            Renderer renderer = cursor.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material = new Material(Shader.Find("Standard"));
+                renderer.material.color = new Color(1, 1, 1, 0.5f); // 半透明白色
+            }
+        }
+
+        // 更新光标位置
+        Vector3 worldPos =
+            Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y,
+                Camera.main.nearClipPlane + 0.1f));
+        cursor.transform.position = worldPos;
+    }
+
     private void OnKeyDown(KeyCode keyCode)
     {
         switch (keyCode)
         {
             case KeyCode.Mouse0: // 鼠标左键
                 Debug.Log("Left mouse button pressed.");
-                if (m_IsMouseEntered)
+
+                if (!isGameStarted)
                 {
-                    if (!isGameStarted)
+                    // 开始游戏 - 选择起始位置
+                    // 这里需要实现获取鼠标点击的格子位置逻辑
+                    // 简化实现：假设点击位置转换为网格坐标
+                    // 获取鼠标点击位置并转换为世界坐标
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out RaycastHit hit))
                     {
-                        // 开始游戏 - 选择起始位置
-                        // 这里需要实现获取鼠标点击的格子位置逻辑
-                        // 简化实现：假设点击位置转换为网格坐标
-                        // 获取鼠标点击位置并转换为世界坐标
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                        if (Physics.Raycast(ray, out RaycastHit hit))
+                        // 假设网格中心在原点，每个格子大小为1单位
+                        int x = Mathf.RoundToInt(hit.point.x /*+ gridSize / 2f*/);
+                        int y = Mathf.RoundToInt(hit.point.y /*+ gridSize / 2f*/);
+                        if (IsWithinBounds(x, y))
                         {
-                            // 假设网格中心在原点，每个格子大小为1单位
-                            int x = Mathf.RoundToInt(hit.point.x + gridSize / 2f);
-                            int y = Mathf.RoundToInt(hit.point.y + gridSize / 2f);
-                            if (IsWithinBounds(x, y))
-                            {
-                                StartGameAt(x, y);
-                            }
+                            StartGameAt(x, y);
                         }
                     }
-                    else if (!isGameOver)
-                    {
-                        // 处理方向选择
-                        HandleDirectionSelection();
-                    }
+                }
+                else if (!isGameOver)
+                {
+                    // 处理方向选择
+                    HandleDirectionSelection();
                 }
 
                 break;
@@ -200,8 +215,8 @@ public class FillColorGame : MonoBehaviour
         Gizmos.color = Color.black;
         for (int x = 0; x <= gridSize; x++)
         {
-            Gizmos.DrawLine(new Vector3(x, 0, 0), new Vector3(x, gridSize, 0));
-            Gizmos.DrawLine(new Vector3(0, x, 0), new Vector3(gridSize, x, 0));
+            Gizmos.DrawLine(new Vector3(x - 0.5f, 0 - 0.5f, 0), new Vector3(x - 0.5f, gridSize - 0.5f, 0));
+            Gizmos.DrawLine(new Vector3(0 - 0.5f, x - 0.5f, 0), new Vector3(gridSize - 0.5f, x - 0.5f, 0));
         }
 
         // 绘制格子状态
@@ -210,7 +225,7 @@ public class FillColorGame : MonoBehaviour
             for (int y = 0; y < gridSize; y++)
             {
                 Cell cell = gameGrid[x, y];
-                Vector3 cellPosition = new Vector3(x + 0.5f, y + 0.5f, 0);
+                Vector3 cellPosition = new Vector3(x, y, 0);
                 Vector3 cellSize = new Vector3(0.9f, 0.9f, 0.1f);
 
                 if (cell.isStart)
@@ -231,7 +246,7 @@ public class FillColorGame : MonoBehaviour
         {
             foreach (var dir in availableDirections)
             {
-                Vector3 pos = new Vector3(currentPosition.x + dir.x + 0.5f, currentPosition.y + dir.y + 0.5f, 0);
+                Vector3 pos = new Vector3(currentPosition.x + dir.x, currentPosition.y + dir.y, 0);
                 Gizmos.color = availableColor;
                 Gizmos.DrawCube(pos, new Vector3(0.8f, 0.8f, 0.1f));
             }
@@ -240,16 +255,17 @@ public class FillColorGame : MonoBehaviour
 
     private void HandleDirectionSelection()
     {
-        if (Input.GetMouseButtonDown(0) && m_IsMouseEntered)
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 // 计算点击位置相对当前位置的方向
-                int x = Mathf.RoundToInt(hit.point.x - 0.5f);
-                int y = Mathf.RoundToInt(hit.point.y - 0.5f);
+                int x = Mathf.RoundToInt(hit.point.x);
+                int y = Mathf.RoundToInt(hit.point.y);
                 Vector2Int direction = new Vector2Int(x - currentPosition.x, y - currentPosition.y);
 
+                Debug.Log($"选择方向: {direction} {x} {y} {hit.point}");
                 if (IsValidDirection(direction))
                 {
                     MoveToDirection(direction);
