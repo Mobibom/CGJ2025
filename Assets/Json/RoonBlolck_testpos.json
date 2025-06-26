@@ -1,0 +1,49 @@
+{ "skeleton": { "images": "F:/Assets/Textures/CGJ2025/RoomBlocks/" },
+"PhotoshopToSpine": { "scale": 1, "padding": 1, "trim": true },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Room2_2", "bone": "root", "attachment": "Room2_2" },
+	{ "name": "Room1_1", "bone": "root", "attachment": "Room1_1" },
+	{ "name": "Room1_2", "bone": "root", "attachment": "Room1_2" },
+	{ "name": "Room1_3", "bone": "root", "attachment": "Room1_3" },
+	{ "name": "Room2_1", "bone": "root", "attachment": "Room2_1" },
+	{ "name": "Room2_3", "bone": "root", "attachment": "Room2_3" },
+	{ "name": "Room3_1", "bone": "root", "attachment": "Room3_1" },
+	{ "name": "Room3_2", "bone": "root", "attachment": "Room3_2" },
+	{ "name": "Room3_3", "bone": "root", "attachment": "Room3_3" }
+],
+"skins": {
+	"default": {
+		"Room2_2": {
+			"Room2_2": { "x": 513, "y": -514.5, "width": 152, "height": 269 }
+		},
+		"Room1_1": {
+			"Room1_1": { "x": 742, "y": -785, "width": 276, "height": 324 }
+		},
+		"Room1_2": {
+			"Room1_2": { "x": 517.5, "y": -783.5, "width": 177, "height": 325 }
+		},
+		"Room1_3": {
+			"Room1_3": { "x": 289.5, "y": -784.5, "width": 289, "height": 321 }
+		},
+		"Room2_1": {
+			"Room2_1": { "x": 719, "y": -504, "width": 272, "height": 248 }
+		},
+		"Room2_3": {
+			"Room2_3": { "x": 306, "y": -504.5, "width": 272, "height": 247 }
+		},
+		"Room3_1": {
+			"Room3_1": { "x": 704, "y": -234.5, "width": 222, "height": 303 }
+		},
+		"Room3_2": {
+			"Room3_2": { "x": 511.5, "y": -248.5, "width": 171, "height": 275 }
+		},
+		"Room3_3": {
+			"Room3_3": { "x": 318.5, "y": -234.5, "width": 219, "height": 303 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
