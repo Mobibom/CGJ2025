@@ -71,12 +71,15 @@ public class GameManager : BaseManager<GameManager>
     public void Init()
     {
         Debug.Log("Init");
-        SceneState = Enum_SceneState.MainMenu;
+        // 下面这段注释掉，影响debug的时候使用，
+        // 可以在GameManger.prefab里设置
+        //SceneState = Enum_SceneState.MainMenu;
         MonoMgr.GetInstance().AddUpdateListener(Update);
 
         EventCenter.GetInstance().AddEventListener<SceneStateData>("场景切换", OnSceneStateChanged);
-
-        OnMainMenuSceneLoaded();
+        
+        if(SceneState == Enum_SceneState.MainMenu)
+            OnMainMenuSceneLoaded();
     }
 
     private void OnMainMenuSceneLoaded()

@@ -27,11 +27,15 @@ public class ScenesMgr : BaseManager<ScenesMgr>
         //        fun();
         //    }
         //};
-
+        SceneManager.LoadSceneAsync(name).completed += (op) =>
+        {
+            Debug.Log("场景加载完成：" + name);
+            fun?.Invoke(); // ✅ 你必须要调用它
+        };
         //场景同步加载
-        SceneManager.LoadScene(name);
+        //SceneManager.LoadScene(name);
         //加载完成过后 才会去执行fun
-        fun();
+        //fun();
     }
 
     /// <summary>

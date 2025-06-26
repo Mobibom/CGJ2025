@@ -22,6 +22,8 @@ public class RoomJsonReader : MonoBehaviour
     [Range(0.01f, 5f)]
     public float highlightTransitionTime = 0.3f;
     public float hightStrength = 0.15f;
+    
+    
 
     [ContextMenu("⚙️ 生成房间")]
     public void GenerateRooms()
@@ -94,8 +96,10 @@ public class RoomJsonReader : MonoBehaviour
             }
 
             sr.material = variantMat;
-            var highLighter = go.AddComponent<RoomHighlighter>();
+            var highLighter = go.AddComponent<RoomBlockHandle>();
             highLighter.hightLightStrength =  hightStrength;
+            highLighter.transitionTime = highlightTransitionTime;
+            highLighter.m_SwitchToScene = block.gameState; 
             
             BoxCollider2D col = go.AddComponent<BoxCollider2D>();
             col.isTrigger = true; 
