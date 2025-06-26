@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Ö÷²Ëµ¥Ãæ°åÀà
+/// ä¸»èœå•é¢æ¿ç±»
 /// </summary>
 public class MainMenuPanel : BasePanel
 {
@@ -11,19 +11,27 @@ public class MainMenuPanel : BasePanel
         switch (btnName)
         {
             case "StartButton":
-                // Òş²ØËùÓĞÃæ°å
+                // éšè—æ‰€æœ‰é¢æ¿
                 UIManager.GetInstance().HideAllPanel(()=> {
-                    // ´¥·¢½øÈë·¿¼äÑ¡Ôñ³¡¾°µÄÊÂ¼ş£¬GameManager »á¼àÌıÕâ¸öÊÂ¼ş£¬²¢¼ÓÔØ³¡¾°
-                    EventCenter.GetInstance().EventTrigger<SceneStateData>("³¡¾°ÇĞ»»", new SceneStateData(Enum_SceneState.RoomSelection));
+                    // è§¦å‘è¿›å…¥æˆ¿é—´é€‰æ‹©åœºæ™¯çš„äº‹ä»¶ï¼ŒGameManager ä¼šç›‘å¬è¿™ä¸ªäº‹ä»¶ï¼Œå¹¶åŠ è½½åœºæ™¯
+                    EventCenter.GetInstance().EventTrigger<SceneStateData>("åœºæ™¯åˆ‡æ¢", new SceneStateData(Enum_SceneState.RoomSelection));
+                });
+                break;
+            
+            case "Game1":
+                // éšè—æ‰€æœ‰é¢æ¿
+                UIManager.GetInstance().HideAllPanel(()=> {
+                    // è§¦å‘è¿›å…¥æˆ¿é—´é€‰æ‹©åœºæ™¯çš„äº‹ä»¶ï¼ŒGameManager ä¼šç›‘å¬è¿™ä¸ªäº‹ä»¶ï¼Œå¹¶åŠ è½½åœºæ™¯
+                    EventCenter.GetInstance().EventTrigger<SceneStateData>("åœºæ™¯åˆ‡æ¢", new SceneStateData(Enum_SceneState.Game1));
                 });
                 break;
 
             case "AboutButton":
-                // TODO: ÏÔÊ¾¶ÓÎéµÄ¹ØÓÚĞÅÏ¢
+                // TODO: æ˜¾ç¤ºé˜Ÿä¼çš„å…³äºä¿¡æ¯
                 break;
 
             case "SettingsButton":
-                // TODO: ÏÔÊ¾ÉèÖÃÃæ°å
+                // TODO: æ˜¾ç¤ºè®¾ç½®é¢æ¿
                 break;
 
             case "ExitGameButton":

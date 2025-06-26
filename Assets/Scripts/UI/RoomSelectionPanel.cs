@@ -1,5 +1,5 @@
 /// <summary>
-/// ·¿¼äÑ¡Ôñ³¡¾°ÖĞµÄ UI Ãæ°å
+/// æˆ¿é—´é€‰æ‹©åœºæ™¯ä¸­çš„ UI é¢æ¿
 /// </summary>
 public class RoomSelectionPanel : BasePanel
 {
@@ -9,10 +9,10 @@ public class RoomSelectionPanel : BasePanel
         switch (btnName)
         {
             case "BackButton":
-                // Òş²ØËùÓĞÃæ°å
+                // éšè—æ‰€æœ‰é¢æ¿
                 UIManager.GetInstance().HideAllPanel(() => {
-                    // ´¥·¢½øÈëÖ÷²Ëµ¥³¡¾°µÄÊÂ¼ş£¬GameManager »á¼àÌıÕâ¸öÊÂ¼ş£¬²¢¼ÓÔØ³¡¾°
-                    EventCenter.GetInstance().EventTrigger<SceneStateData>("³¡¾°ÇĞ»»", new SceneStateData(Enum_SceneState.MainMenu));
+                    // è§¦å‘è¿›å…¥ä¸»èœå•åœºæ™¯çš„äº‹ä»¶ï¼ŒGameManager ä¼šç›‘å¬è¿™ä¸ªäº‹ä»¶ï¼Œå¹¶åŠ è½½åœºæ™¯
+                    EventCenter.GetInstance().EventTrigger<SceneStateData>("åœºæ™¯åˆ‡æ¢", new SceneStateData(Enum_SceneState.MainMenu));
                 });
                 break;
         }
