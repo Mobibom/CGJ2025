@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SelectableDoor : MonoBehaviour
 {
-    [Header("切换场景枚举")]
+    [Header("鍒囨崲鍦烘櫙鏋氫妇")]
     [SerializeField]
     private Enum_SceneState m_SwitchToScene;
 
@@ -21,21 +21,21 @@ public class SelectableDoor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
+        EventCenter.GetInstance().AddEventListener<KeyCode>("鏌愰敭鎸変笅", OnKeyDown);
     }
 
     private void OnKeyDown(KeyCode keyCode)
     {
         switch (keyCode)
         {
-            case KeyCode.Mouse0: // 鼠标左键
+            case KeyCode.Mouse0: // 榧犳爣宸﹂敭
                 Debug.Log("Left mouse button pressed.");
                 if (m_IsMouseEntered)
                 {
-                    // 打开门，进入房间
-                    // 测试代码
+                    // 鎵撳紑闂紝杩涘叆鎴块棿
+                    // 娴嬭瘯浠ｇ爜
                     UIManager.GetInstance().HideAllPanel(() => {
-                        EventCenter.GetInstance().EventTrigger("场景切换", new SceneStateData(m_SwitchToScene, () => { Debug.Log("进入房间"); }));
+                        EventCenter.GetInstance().EventTrigger("鍦烘櫙鍒囨崲", new SceneStateData(m_SwitchToScene, () => { Debug.Log("杩涘叆鎴块棿"); }));
                     });
                 }
                 break;
@@ -44,7 +44,7 @@ public class SelectableDoor : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventCenter.GetInstance().RemoveEventListener<KeyCode>("某键按下", OnKeyDown);
+        EventCenter.GetInstance().RemoveEventListener<KeyCode>("鏌愰敭鎸変笅", OnKeyDown);
     }
 
     // Update is called once per frame

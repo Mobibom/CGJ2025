@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// ³¡¾°×´Ì¬µÄÃ¶¾Ù
+/// åœºæ™¯çŠ¶æ€çš„æšä¸¾
 /// </summary>
 public enum Enum_SceneState
 {
@@ -27,7 +27,7 @@ public class SceneStateData
 }
 
 /// <summary>
-/// ÓÎÏ·¹ÜÀíÆ÷£¬Ö÷Âß¼­µÄÈë¿Ú
+/// æ¸¸æˆç®¡ç†å™¨ï¼Œä¸»é€»è¾‘çš„å…¥å£
 /// </summary>
 public class GameManager : BaseManager<GameManager>
 {
@@ -37,7 +37,7 @@ public class GameManager : BaseManager<GameManager>
     {
         MonoMgr.GetInstance().AddUpdateListener(Update);
         InputMgr.GetInstance().StartOrEndCheck(true);
-        EventCenter.GetInstance().AddEventListener<KeyCode>("Ä³¼ü°´ÏÂ", OnKeyDown);
+        EventCenter.GetInstance().AddEventListener<KeyCode>("æŸé”®æŒ‰ä¸‹", OnKeyDown);
     }
 
     private void OnKeyDown(KeyCode keyCode)
@@ -72,14 +72,14 @@ public class GameManager : BaseManager<GameManager>
         SceneState = Enum_SceneState.MainMenu;
         MonoMgr.GetInstance().AddUpdateListener(Update);
 
-        EventCenter.GetInstance().AddEventListener<SceneStateData>("³¡¾°ÇĞ»»", OnSceneStateChanged);
+        EventCenter.GetInstance().AddEventListener<SceneStateData>("åœºæ™¯åˆ‡æ¢", OnSceneStateChanged);
 
         OnMainMenuSceneLoaded();
     }
 
     private void OnMainMenuSceneLoaded()
     {
-        Debug.Log("Ö÷²Ëµ¥³¡¾°¼ÓÔØÍê³É");
+        Debug.Log("ä¸»èœå•åœºæ™¯åŠ è½½å®Œæˆ");
         SceneState = Enum_SceneState.MainMenu;
         // MusicMgr.GetInstance().PlayBkMusic("");
         UIManager.GetInstance().ShowPanel<MainMenuPanel>("MainMenu/MainMenuPanel", E_UI_Layer.Top);
@@ -87,14 +87,14 @@ public class GameManager : BaseManager<GameManager>
 
     private void OnRoomSelectionSceneLoaded()
     {
-        Debug.Log("·¿¼äÑ¡Ôñ³¡¾°¼ÓÔØÍê³É");
+        Debug.Log("æˆ¿é—´é€‰æ‹©åœºæ™¯åŠ è½½å®Œæˆ");
         SceneState = Enum_SceneState.RoomSelection;
         UIManager.GetInstance().ShowPanel<RoomSelectionPanel>("Room/RoomSelectionPanel", E_UI_Layer.Top);
     }
 
     private void OnDemoRoomSceneLoaded()
     {
-        Debug.Log("DemoRoom ³¡¾°¼ÓÔØÍê³É");
+        Debug.Log("DemoRoom åœºæ™¯åŠ è½½å®Œæˆ");
         SceneState = Enum_SceneState.DemoRoom;
         UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Top);
     }
@@ -104,7 +104,7 @@ public class GameManager : BaseManager<GameManager>
         if (data.state == SceneState)
             return;
 
-        // TODO: Ìí¼Ó¸ü¶àµÄ³¡¾°×´Ì¬´¦Àí
+        // TODO: æ·»åŠ æ›´å¤šçš„åœºæ™¯çŠ¶æ€å¤„ç†
         switch (data.state)
         {
             case Enum_SceneState.MainMenu:
@@ -113,7 +113,7 @@ public class GameManager : BaseManager<GameManager>
                 break;
 
             case Enum_SceneState.RoomSelection:
-                // ½øÈë·¿¼äÑ¡Ôñ³¡¾°
+                // è¿›å…¥æˆ¿é—´é€‰æ‹©åœºæ™¯
                 data.callBack += OnRoomSelectionSceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("RoomSelectionScene", data.callBack);
                 break;

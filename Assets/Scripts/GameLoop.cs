@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// ÓÎÏ·Ñ­»·£¬ÓÃÓÚ³õÊ¼»¯ÓÎÏ·¹ÜÀíÆ÷
+/// æ¸¸æˆå¾ªç¯ï¼Œç”¨äºåˆå§‹åŒ–æ¸¸æˆç®¡ç†å™¨
 /// </summary>
 public class GameLoop : MonoBehaviour
 {
