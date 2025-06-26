@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine.Rendering;
+using DG.Tweening;
 
 [System.Serializable]
 public struct Cell
@@ -288,8 +289,13 @@ public class FillColorGame : MonoBehaviour
         // 清除当前位置标记
         gameGrid[currentPosition.x, currentPosition.y].isCurrent = false;
 
-        // 更新当前位置
-        currentPosition += direction;
+        // 使用DOTween动画移动
+        Vector2Int newPosition = currentPosition + direction;
+        Transform cellTransform = cellObjects[newPosition.x, newPosition.y].transform;
+        cellTransform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.3f, 1, 0.5f).SetDelay(0.2f);
+
+        // 更新游戏状态
+        currentPosition = newPosition;
         gameGrid[currentPosition.x, currentPosition.y].isFilled = true;
         gameGrid[currentPosition.x, currentPosition.y].isCurrent = true;
         filledCount++;
@@ -311,13 +317,13 @@ public class FillColorGame : MonoBehaviour
                 if (renderer == null) continue;
 
                 if (cell.isCurrent)
-                    renderer.material.color = currentColor;
+                    renderer.material.DOColor(currentColor, 0.6f).SetDelay(0.2f);
                 else if (cell.isStart)
-                    renderer.material.color = startColor;
+                    renderer.material.DOColor(startColor, 0.6f).SetDelay(0.2f);
                 else if (cell.isFilled)
-                    renderer.material.color = fillColor;
+                    renderer.material.DOColor(fillColor, 0.6f).SetDelay(0.2f);
                 else
-                    renderer.material.color = Color.white;
+                    renderer.material.DOColor(Color.white, 0.6f).SetDelay(0.2f);
             }
         }
 
