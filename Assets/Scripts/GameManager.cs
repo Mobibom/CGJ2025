@@ -11,6 +11,8 @@ public enum Enum_SceneState
     DemoRoom,
     Room1,
     Room2,
+    
+    Game1
 }
 
 public class SceneStateData
