@@ -11,7 +11,7 @@ public enum Enum_SceneState
     DemoRoom,
     Room1,
     Room2,
-    
+
     Game1
 }
 
@@ -101,6 +101,12 @@ public class GameManager : BaseManager<GameManager>
         UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Top);
     }
 
+    private void OnGame1SceneLoaded()
+    {
+        Debug.Log("Game1 场景加载完成");
+        SceneState = Enum_SceneState.Game1;
+    }
+
     private void OnSceneStateChanged(SceneStateData data)
     {
         if (data.state == SceneState)
@@ -123,6 +129,11 @@ public class GameManager : BaseManager<GameManager>
             case Enum_SceneState.DemoRoom:
                 data.callBack += OnDemoRoomSceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("DemoRoomScene", data.callBack);
+                break;
+
+            case Enum_SceneState.Game1:
+                data.callBack += OnGame1SceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("FillColorGameScene", data.callBack);
                 break;
 
             default:

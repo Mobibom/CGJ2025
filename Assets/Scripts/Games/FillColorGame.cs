@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 [System.Serializable]
 public struct Cell
@@ -14,6 +15,9 @@ public struct Cell
 public class FillColorGame : MonoBehaviour
 {
     [Header("游戏设置")] [SerializeField] private int gridSize = 5; // NxN矩阵大小
+    [SerializeField] private Material cellMaterial; // 单元格材质
+    [SerializeField] private float cellSize = 1f; // 单元格大小
+    private GameObject[,] cellObjects; // 存储单元格游戏对象
     [SerializeField] private Color fillColor = Color.blue;
     [SerializeField] private Color startColor = Color.green;
     [SerializeField] private Color currentColor = Color.yellow;
@@ -49,11 +53,35 @@ public class FillColorGame : MonoBehaviour
     {
         // 初始化游戏网格
         gameGrid = new Cell[gridSize, gridSize];
+        cellObjects = new GameObject[gridSize, gridSize];
+
+        // 创建网格单元格对象
         for (int x = 0; x < gridSize; x++)
         {
             for (int y = 0; y < gridSize; y++)
             {
-                gameGrid[x, y] = new Cell { x = x, y = y, isFilled = false, isStart = false };
+                // 创建单元格游戏对象
+                GameObject cell = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                cell.name = $"Cell_{x}_{y}";
+                cell.transform.parent = transform;
+                cell.transform.position = new Vector3(x * cellSize, y * cellSize, 0);
+                cell.transform.localScale = new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f);
+
+                // 添加碰撞体用于鼠标检测
+                if (cell.GetComponent<BoxCollider>() == null)
+                {
+                    BoxCollider collider = cell.AddComponent<BoxCollider>();
+                    collider.size = new Vector3(1, 1, 0.1f);
+                }
+
+                // 设置材质
+                Renderer renderer = cell.GetComponent<Renderer>();
+                if (renderer != null && cellMaterial != null)
+                {
+                    renderer.material = cellMaterial;
+                }
+
+                cellObjects[x, y] = cell;
             }
         }
 
@@ -150,6 +178,17 @@ public class FillColorGame : MonoBehaviour
     private void OnDestroy()
     {
         EventCenter.GetInstance().RemoveEventListener<KeyCode>("某键按下", OnKeyDown);
+        // 清理单元格对象
+        if (cellObjects != null)
+        {
+            for (int x = 0; x < gridSize; x++)
+            {
+                for (int y = 0; y < gridSize; y++)
+                {
+                    Destroy(cellObjects[x, y]);
+                }
+            }
+        }
     }
 
     // 绘制网格和格子状态
@@ -244,12 +283,51 @@ public class FillColorGame : MonoBehaviour
         CheckGameState();
     }
 
+    // 更新单元格视觉状态
+    private void UpdateCellVisuals()
+    {
+        for (int x = 0; x < gridSize; x++)
+        {
+            for (int y = 0; y < gridSize; y++)
+            {
+                Cell cell = gameGrid[x, y];
+                Renderer renderer = cellObjects[x, y].GetComponent<Renderer>();
+                if (renderer == null) continue;
+
+                if (cell.isCurrent)
+                    renderer.material.color = currentColor;
+                else if (cell.isStart)
+                    renderer.material.color = startColor;
+                else if (cell.isFilled)
+                    renderer.material.color = fillColor;
+                else
+                    renderer.material.color = Color.white;
+            }
+        }
+
+        // 更新可用方向提示
+        if (isGameStarted && !isGameOver)
+        {
+            foreach (var dir in availableDirections)
+            {
+                int x = currentPosition.x + dir.x;
+                int y = currentPosition.y + dir.y;
+                if (IsWithinBounds(x, y))
+                {
+                    Renderer renderer = cellObjects[x, y].GetComponent<Renderer>();
+                    if (renderer != null)
+                        renderer.material.color = availableColor;
+                }
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (isGameStarted && !isGameOver)
         {
-            OnDrawGizmos();
+            UpdateCellVisuals();
             HandleDirectionSelection();
         }
     }
