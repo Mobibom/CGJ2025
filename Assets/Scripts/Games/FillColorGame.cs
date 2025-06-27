@@ -24,10 +24,12 @@ namespace Games
 
         [SerializeField] private Material cellMaterial; // 单元格材质
         [SerializeField] private float cellSize = 1f; // 单元格大小
-        [SerializeField] private Color fillColor = Color.blue;
-        [SerializeField] private Color startColor = Color.magenta;
-        [SerializeField] private Color currentColor = Color.blue;
-        [SerializeField] private Color availableColor = Color.cyan;
+        [SerializeField] private Sprite emptySprite;
+        [SerializeField] private Sprite fillSprite;
+        [SerializeField] private Sprite startSprite;
+        [SerializeField] private Sprite currentSprite;
+        [SerializeField] private Sprite availableSprite;
+        [SerializeField] private Sprite barrierSprite;
         [SerializeField] private float animationDuration = 0.1f; // 动画持续时间
 
         private Cell[,] cells;
@@ -38,7 +40,7 @@ namespace Games
         private int filledCount;
         private Vector2Int currentPosition;
         private List<Vector2Int> availableDirections = new();
-        private readonly List<Renderer> lastDirectionRenderer = new();
+        private readonly List<SpriteRenderer> lastDirectionRenderer = new();
         private GameObject cursor;
 
         // Start is called before the first frame update
@@ -69,11 +71,18 @@ namespace Games
                 for (var y = 0; y < gridSize; y++)
                 {
                     // 创建单元格游戏对象
-                    var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    obj.name = $"Cell_{x}_{y}";
-                    obj.transform.parent = transform;
-                    obj.transform.position = new Vector3(x * cellSize, y * cellSize, 0);
-                    obj.transform.localScale = new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f);
+                    var obj = new GameObject
+                    {
+                        name = $"Cell_{x}_{y}",
+                        transform =
+                        {
+                            parent = transform,
+                            position = new Vector3(x * cellSize, y * cellSize, 0),
+                            localScale = new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f)
+                        }
+                    };
+                    var spr = obj.AddComponent<SpriteRenderer>();
+                    spr.sprite = emptySprite;
 
                     // 添加碰撞体用于鼠标检测
                     if (obj.GetComponent<BoxCollider>() == null)
@@ -82,11 +91,11 @@ namespace Games
                     }
 
                     // 设置材质
-                    var r = obj.GetComponent<Renderer>();
-                    if (r != null && cellMaterial != null)
-                    {
-                        r.material = cellMaterial;
-                    }
+                    // var r = obj.GetComponent<Renderer>();
+                    // if (r != null && cellMaterial != null)
+                    // {
+                    //     r.material = cellMaterial;
+                    // }
 
                     cells[x, y].obj = obj;
                 }
@@ -116,9 +125,9 @@ namespace Games
         {
             if (!IsWithinBounds(x, y)) return;
 
-            var rr = cells[x, y].obj.GetComponent<Renderer>();
+            var rr = cells[x, y].obj.GetComponent<SpriteRenderer>();
             cells[x, y].isFilled = true; // 设置为障碍
-            rr.material.color = Color.red; // 设置障碍颜色
+            rr.sprite = barrierSprite; // 设置障碍颜色
         }
 
         private bool IsWithinBounds(int x, int y)
@@ -276,11 +285,11 @@ namespace Games
                     var gzmCellSize = new Vector3(0.9f, 0.9f, 0.1f);
 
                     if (cell.isStart)
-                        Gizmos.color = startColor;
+                        Gizmos.color = Color.magenta;
                     else if (cell.isCurrent)
-                        Gizmos.color = currentColor;
+                        Gizmos.color = Color.blue;
                     else if (cell.isFilled)
-                        Gizmos.color = fillColor;
+                        Gizmos.color = Color.cyan;
                     else
                         Gizmos.color = Color.white;
 
@@ -294,7 +303,7 @@ namespace Games
             foreach (var pos in availableDirections.Select(dir =>
                          new Vector3(currentPosition.x + dir.x, currentPosition.y + dir.y, 0)))
             {
-                Gizmos.color = availableColor;
+                Gizmos.color = Color.green;
                 Gizmos.DrawCube(pos, new Vector3(0.8f, 0.8f, 0.1f));
             }
         }
@@ -365,7 +374,8 @@ namespace Games
 
             foreach (var rr in lastDirectionRenderer)
             {
-                rr.material.DOColor(Color.white, 0.6f).SetDelay(animationDuration);
+                rr.sprite = emptySprite; // 清除上次的方向提示
+                rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration);
             }
 
             lastDirectionRenderer.Clear();
@@ -373,14 +383,17 @@ namespace Games
             var delayIndex = 0;
             foreach (var rr in filledCells
                          .Select(filledCellPos =>
-                             cells[filledCellPos.x, filledCellPos.y].obj.GetComponent<Renderer>())
+                             cells[filledCellPos.x, filledCellPos.y].obj.GetComponent<SpriteRenderer>())
                          .Where(rr => rr != null))
             {
-                var t = (Math.Atan((filledCount - barriers.Count - 1) * 1.0f /
-                    (gridSize * gridSize - barriers.Count - 1) * 2 - 1) / Math.PI * 2 + 1) / 2;
+                // var t = (Math.Atan((filledCount - barriers.Count - 1) * 1.0f /
+                // (gridSize * gridSize - barriers.Count - 1) * 2 - 1) / Math.PI * 2 + 1) / 2;
 
-                var c = Color.Lerp(startColor, currentColor, (float)t);
-                rr.material.DOColor(c, 0.6f).SetDelay(animationDuration * delayIndex);
+                // var c = Color.Lerp(startSprite, currentSprite, (float)t);
+                // rr.material.DOColor(c, 0.6f).SetDelay(animationDuration * delayIndex);
+                rr.sprite = fillSprite;
+                rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
                 var cellTransform = rr.transform;
                 cellTransform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.3f, 1, 0.5f)
                     .SetDelay(animationDuration * delayIndex);
@@ -394,18 +407,30 @@ namespace Games
                 for (var y = 0; y < gridSize; y++)
                 {
                     var cell = cells[x, y];
-                    var rr = cells[x, y].obj.GetComponent<Renderer>();
+                    var rr = cells[x, y].obj.GetComponent<SpriteRenderer>();
                     if (rr == null) continue;
 
                     if (cell.isCurrent)
-                        rr.material.DOColor(currentColor, 0.6f).SetDelay(animationDuration * delayIndex);
+                    {
+                        rr.sprite = currentSprite;
+                        rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                        rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                    }
                     else if (cell.isStart)
-                        rr.material.DOColor(startColor, 0.6f).SetDelay(animationDuration * delayIndex);
+                    {
+                        rr.sprite = startSprite;
+                        rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                        rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                    }
                     else if (cell.isFilled)
                     {
                     }
                     else
-                        rr.material.DOColor(Color.white, 0.6f).SetDelay(animationDuration * delayIndex);
+                    {
+                        rr.sprite = emptySprite;
+                        rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                        rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                    }
                 }
             }
 
@@ -416,13 +441,15 @@ namespace Games
                          let x = currentPosition.x + dir.x
                          let y = currentPosition.y + dir.y
                          where IsWithinBounds(x, y)
-                         select cells[x, y].obj.GetComponent<Renderer>()
+                         select cells[x, y].obj.GetComponent<SpriteRenderer>()
                          into rr
                          where rr != null
                          select rr)
                 {
                     lastDirectionRenderer.Add(rr);
-                    rr.material.DOColor(availableColor, 0.6f).SetDelay(animationDuration * delayIndex);
+                    rr.sprite = availableSprite;
+                    rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                    rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
                 }
             }
 

@@ -174,10 +174,12 @@ MonoBehaviour:
   - {x: 4, y: 2}
   cellMaterial: {fileID: 0}
   cellSize: 1
-  fillColor: {r: 0, g: 0, b: 1, a: 1}
-  startColor: {r: 0, g: 1, b: 0, a: 1}
-  currentColor: {r: 1, g: 0, b: 0.77281, a: 1}
-  availableColor: {r: 0, g: 1, b: 1, a: 1}
+  emptySprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  fillSprite: {fileID: 21300000, guid: 9cee0e084396400499f508c1be90aa18, type: 3}
+  startSprite: {fileID: 21300000, guid: 9efc5ebf7dbface429d06b4cd347a964, type: 3}
+  currentSprite: {fileID: 21300000, guid: 8a9f18ca5cb80fb4788ccee5c200c098, type: 3}
+  availableSprite: {fileID: 21300000, guid: 299bd0287fe97bd4b9eb4f1872fe5b87, type: 3}
+  barrierSprite: {fileID: 21300000, guid: 7a2a437159d1c834595e83d594aa8f20, type: 3}
   animationDuration: 0.1
 --- !u!1 &1991022826
 GameObject:
