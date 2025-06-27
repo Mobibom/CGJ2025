@@ -65,6 +65,18 @@ public class NumberGraph : MonoBehaviour
         }
     }
 
+    private void Reset()
+    {
+        for (int i = 0; i < matrixSize; i++)
+        {
+            for (int j = 0; j < matrixSize; j++)
+            {
+                matrix[i, j] = 0;
+                cells[i, j].GetComponent<SpriteRenderer>().color = Color.white;
+            }
+        }
+    }
+
     private void OnKeyDown(KeyCode keyCode)
     {
         switch (keyCode)
