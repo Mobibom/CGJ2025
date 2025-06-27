@@ -176,7 +176,7 @@ MonoBehaviour:
   cellSize: 1
   fillColor: {r: 0, g: 0, b: 1, a: 1}
   startColor: {r: 0, g: 1, b: 0, a: 1}
-  currentColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  currentColor: {r: 1, g: 0, b: 0.77281, a: 1}
   availableColor: {r: 0, g: 1, b: 1, a: 1}
   animationDuration: 0.1
 --- !u!1 &1991022826

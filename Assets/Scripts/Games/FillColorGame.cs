@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -26,8 +27,8 @@ namespace Games
         [SerializeField] private float cellSize = 1f; // 单元格大小
         private GameObject[,] cellObjects; // 存储单元格游戏对象
         [SerializeField] private Color fillColor = Color.blue;
-        [SerializeField] private Color startColor = Color.green;
-        [SerializeField] private Color currentColor = Color.yellow;
+        [SerializeField] private Color startColor = Color.magenta;
+        [SerializeField] private Color currentColor = Color.blue;
         [SerializeField] private Color availableColor = Color.cyan;
         [SerializeField] private float animationDuration = 0.1f; // 动画持续时间
 
@@ -97,7 +98,6 @@ namespace Games
             isUpdatingVisuals = false;
             isGameStarted = false;
             isGameOver = false;
-            filledCount = 0;
 
             currentPosition = Vector2Int.zero;
             availableDirections.Clear();
@@ -109,6 +109,8 @@ namespace Games
             {
                 SetBarrier((int)barrier.x, (int)barrier.y);
             }
+
+            filledCount = barriers.Count;
 
             Debug.Log("游戏已重置");
         }
@@ -377,7 +379,11 @@ namespace Games
                              cellObjects[filledCellPos.x, filledCellPos.y].GetComponent<Renderer>())
                          .Where(rr => rr != null))
             {
-                rr.material.DOColor(fillColor, 0.6f).SetDelay(animationDuration * delayIndex);
+                var t = (Math.Atan((filledCount - barriers.Count - 1) * 1.0f /
+                    (gridSize * gridSize - barriers.Count - 1) * 2 - 1) / Math.PI * 2 + 1) / 2;
+
+                var c = Color.Lerp(startColor, currentColor, (float)t);
+                rr.material.DOColor(c, 0.6f).SetDelay(animationDuration * delayIndex);
                 var cellTransform = rr.transform;
                 cellTransform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.3f, 1, 0.5f)
                     .SetDelay(animationDuration * delayIndex);
