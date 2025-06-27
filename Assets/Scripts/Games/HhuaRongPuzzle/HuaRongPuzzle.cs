@@ -18,6 +18,8 @@ public class HuaRongPuzzle : MonoBehaviour
     {
         EventCenter.GetInstance().AddEventListener<Vector2>("初始化华容道", InitializeGame);
         EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", HandleMouseClick);
+        EventCenter.GetInstance().AddEventListener<Vector2>("重置华容道",ResetHuaRongPuzzle);
+        
         EventCenter.GetInstance().EventTrigger<Vector2>("初始化华容道", Vector2.zero);
     }
     private void InitializeGame(Vector2 originPoint)
@@ -291,6 +293,22 @@ public class HuaRongPuzzle : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private void ResetHuaRongPuzzle(Vector2 originPoint)
+    {
+        foreach (Transform child in huarongPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        EventCenter.GetInstance().EventTrigger<Vector2>("初始化华容道", originPoint);
+    }
+    
+    private void HackWin()
+    {
+        Debug.Log("HackWin()");
+        EventCenter.GetInstance().EventTrigger("华容道通关");
     }
 
 }
