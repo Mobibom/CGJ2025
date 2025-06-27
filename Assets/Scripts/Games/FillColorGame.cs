@@ -50,11 +50,19 @@ namespace Games
             ResetGame();
         }
 
-        private void InitializeGame()
+        private void ResetGame()
         {
+            if (cellObjects != null)
+            {
+                foreach (var cell in cellObjects)
+                {
+                    Destroy(cell);
+                }
+            }
+
+            // 重置游戏状态
             // 初始化游戏网格
             gameGrid = new Cell[gridSize, gridSize];
-            filledCells.Clear();
             cellObjects = new GameObject[gridSize, gridSize];
 
             // 创建网格单元格对象
@@ -90,19 +98,10 @@ namespace Games
             isGameStarted = false;
             isGameOver = false;
             filledCount = 0;
-            Debug.Log($"初始化 {gridSize}x{gridSize} 网格游戏");
-        }
 
-        public void ResetGame()
-        {
-            // 重置游戏状态
-            InitializeGame();
             currentPosition = Vector2Int.zero;
             availableDirections.Clear();
             filledCells.Clear();
-            isGameStarted = false;
-            isGameOver = false;
-            filledCount = 0;
             lastDirectionRenderer.Clear();
 
             // 添加障碍物
