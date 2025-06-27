@@ -9,8 +9,7 @@ namespace Games
     [System.Serializable]
     public struct Cell
     {
-        public int x;
-        public int y;
+        public GameObject obj;
         public bool isFilled;
         public bool isStart;
         public bool isCurrent;
@@ -25,14 +24,13 @@ namespace Games
 
         [SerializeField] private Material cellMaterial; // 单元格材质
         [SerializeField] private float cellSize = 1f; // 单元格大小
-        private GameObject[,] cellObjects; // 存储单元格游戏对象
         [SerializeField] private Color fillColor = Color.blue;
         [SerializeField] private Color startColor = Color.magenta;
         [SerializeField] private Color currentColor = Color.blue;
         [SerializeField] private Color availableColor = Color.cyan;
         [SerializeField] private float animationDuration = 0.1f; // 动画持续时间
 
-        private Cell[,] gameGrid;
+        private Cell[,] cells;
         private readonly List<Vector2Int> filledCells = new();
         private bool isUpdatingVisuals;
         private bool isGameStarted;
@@ -53,18 +51,17 @@ namespace Games
 
         private void ResetGame()
         {
-            if (cellObjects != null)
+            if (cells != null)
             {
-                foreach (var cell in cellObjects)
+                foreach (var cell in cells)
                 {
-                    Destroy(cell);
+                    Destroy(cell.obj);
                 }
             }
 
             // 重置游戏状态
             // 初始化游戏网格
-            gameGrid = new Cell[gridSize, gridSize];
-            cellObjects = new GameObject[gridSize, gridSize];
+            cells = new Cell[gridSize, gridSize];
 
             // 创建网格单元格对象
             for (var x = 0; x < gridSize; x++)
@@ -72,26 +69,26 @@ namespace Games
                 for (var y = 0; y < gridSize; y++)
                 {
                     // 创建单元格游戏对象
-                    var cell = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    cell.name = $"Cell_{x}_{y}";
-                    cell.transform.parent = transform;
-                    cell.transform.position = new Vector3(x * cellSize, y * cellSize, 0);
-                    cell.transform.localScale = new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f);
+                    var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    obj.name = $"Cell_{x}_{y}";
+                    obj.transform.parent = transform;
+                    obj.transform.position = new Vector3(x * cellSize, y * cellSize, 0);
+                    obj.transform.localScale = new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f);
 
                     // 添加碰撞体用于鼠标检测
-                    if (cell.GetComponent<BoxCollider>() == null)
+                    if (obj.GetComponent<BoxCollider>() == null)
                     {
-                        cell.AddComponent<BoxCollider>().size = new Vector3(1, 1, 0.1f);
+                        obj.AddComponent<BoxCollider>().size = new Vector3(1, 1, 0.1f);
                     }
 
                     // 设置材质
-                    var r = cell.GetComponent<Renderer>();
+                    var r = obj.GetComponent<Renderer>();
                     if (r != null && cellMaterial != null)
                     {
                         r.material = cellMaterial;
                     }
 
-                    cellObjects[x, y] = cell;
+                    cells[x, y].obj = obj;
                 }
             }
 
@@ -119,8 +116,8 @@ namespace Games
         {
             if (!IsWithinBounds(x, y)) return;
 
-            var rr = cellObjects[x, y].GetComponent<Renderer>();
-            gameGrid[x, y].isFilled = true; // 设置为障碍
+            var rr = cells[x, y].obj.GetComponent<Renderer>();
+            cells[x, y].isFilled = true; // 设置为障碍
             rr.material.color = Color.red; // 设置障碍颜色
         }
 
@@ -134,10 +131,10 @@ namespace Games
             var directions = new List<Vector2Int>();
 
             // 检查上、下、左、右四个方向
-            if (IsWithinBounds(x, y - 1) && !gameGrid[x, y - 1].isFilled) directions.Add(Vector2Int.down); // 上
-            if (IsWithinBounds(x, y + 1) && !gameGrid[x, y + 1].isFilled) directions.Add(Vector2Int.up); // 下
-            if (IsWithinBounds(x - 1, y) && !gameGrid[x - 1, y].isFilled) directions.Add(Vector2Int.left); // 左
-            if (IsWithinBounds(x + 1, y) && !gameGrid[x + 1, y].isFilled) directions.Add(Vector2Int.right); // 右
+            if (IsWithinBounds(x, y - 1) && !cells[x, y - 1].isFilled) directions.Add(Vector2Int.down); // 上
+            if (IsWithinBounds(x, y + 1) && !cells[x, y + 1].isFilled) directions.Add(Vector2Int.up); // 下
+            if (IsWithinBounds(x - 1, y) && !cells[x - 1, y].isFilled) directions.Add(Vector2Int.left); // 左
+            if (IsWithinBounds(x + 1, y) && !cells[x + 1, y].isFilled) directions.Add(Vector2Int.right); // 右
 
             return directions;
         }
@@ -229,11 +226,11 @@ namespace Games
 
         private void StartGameAt(int x, int y)
         {
-            if (!IsWithinBounds(x, y) || gameGrid[x, y].isFilled) return;
+            if (!IsWithinBounds(x, y) || cells[x, y].isFilled) return;
 
-            gameGrid[x, y].isFilled = true;
-            gameGrid[x, y].isStart = true;
-            gameGrid[x, y].isCurrent = true;
+            cells[x, y].isFilled = true;
+            cells[x, y].isStart = true;
+            cells[x, y].isCurrent = true;
             filledCount++;
             currentPosition = new Vector2Int(x, y);
             isGameStarted = true;
@@ -245,13 +242,13 @@ namespace Games
         {
             EventCenter.GetInstance().RemoveEventListener<KeyCode>("某键按下", OnKeyDown);
             // 清理单元格对象
-            if (cellObjects == null) return;
+            if (cells == null) return;
 
             for (var x = 0; x < gridSize; x++)
             {
                 for (var y = 0; y < gridSize; y++)
                 {
-                    Destroy(cellObjects[x, y]);
+                    Destroy(cells[x, y].obj);
                 }
             }
         }
@@ -259,7 +256,7 @@ namespace Games
         // 绘制网格和格子状态
         private void OnDrawGizmos()
         {
-            if (gameGrid == null) return;
+            if (cells == null) return;
 
             // 绘制网格线
             Gizmos.color = Color.black;
@@ -274,7 +271,7 @@ namespace Games
             {
                 for (var y = 0; y < gridSize; y++)
                 {
-                    var cell = gameGrid[x, y];
+                    var cell = cells[x, y];
                     var cellPosition = new Vector3(x, y, 0);
                     var gzmCellSize = new Vector3(0.9f, 0.9f, 0.1f);
 
@@ -341,15 +338,15 @@ namespace Games
         private void MoveToDirection(Vector2Int direction)
         {
             // 清除当前位置标记
-            gameGrid[currentPosition.x, currentPosition.y].isCurrent = false;
+            cells[currentPosition.x, currentPosition.y].isCurrent = false;
 
             // 使用DOTween动画移动
             var newPosition = currentPosition + direction;
 
             // 更新游戏状态
             currentPosition = newPosition;
-            gameGrid[currentPosition.x, currentPosition.y].isFilled = true;
-            gameGrid[currentPosition.x, currentPosition.y].isCurrent = true;
+            cells[currentPosition.x, currentPosition.y].isFilled = true;
+            cells[currentPosition.x, currentPosition.y].isCurrent = true;
             filledCount++;
 
             // 更新可用方向
@@ -376,7 +373,7 @@ namespace Games
             var delayIndex = 0;
             foreach (var rr in filledCells
                          .Select(filledCellPos =>
-                             cellObjects[filledCellPos.x, filledCellPos.y].GetComponent<Renderer>())
+                             cells[filledCellPos.x, filledCellPos.y].obj.GetComponent<Renderer>())
                          .Where(rr => rr != null))
             {
                 var t = (Math.Atan((filledCount - barriers.Count - 1) * 1.0f /
@@ -396,8 +393,8 @@ namespace Games
             {
                 for (var y = 0; y < gridSize; y++)
                 {
-                    var cell = gameGrid[x, y];
-                    var rr = cellObjects[x, y].GetComponent<Renderer>();
+                    var cell = cells[x, y];
+                    var rr = cells[x, y].obj.GetComponent<Renderer>();
                     if (rr == null) continue;
 
                     if (cell.isCurrent)
@@ -419,7 +416,7 @@ namespace Games
                          let x = currentPosition.x + dir.x
                          let y = currentPosition.y + dir.y
                          where IsWithinBounds(x, y)
-                         select cellObjects[x, y].GetComponent<Renderer>()
+                         select cells[x, y].obj.GetComponent<Renderer>()
                          into rr
                          where rr != null
                          select rr)
