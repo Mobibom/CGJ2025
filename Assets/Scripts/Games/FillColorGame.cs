@@ -28,13 +28,14 @@ namespace Games
         [SerializeField] private float animationDuration = 0.1f; // 动画持续时间
 
         private Cell[,] gameGrid;
-        private List<Vector2Int> filledCells = new();
+        private readonly List<Vector2Int> filledCells = new();
         private bool isUpdatingVisuals;
         private bool isGameStarted;
         private bool isGameOver;
         private int filledCount;
         private Vector2Int currentPosition;
         private List<Vector2Int> availableDirections = new();
+        private readonly List<Renderer> lastDirectionRenderer = new();
         private GameObject cursor;
 
         // Start is called before the first frame update
@@ -329,6 +330,14 @@ namespace Games
             }
 
             isUpdatingVisuals = true;
+
+            foreach (var rr in lastDirectionRenderer)
+            {
+                rr.material.DOColor(Color.white, 0.6f).SetDelay(animationDuration);
+            }
+
+            lastDirectionRenderer.Clear();
+
             var delayIndex = 0;
             foreach (var rr in filledCells
                          .Select(filledCellPos =>
@@ -376,6 +385,7 @@ namespace Games
                          where rr != null
                          select rr)
                 {
+                    lastDirectionRenderer.Add(rr);
                     rr.material.DOColor(availableColor, 0.6f).SetDelay(animationDuration * delayIndex);
                 }
             }
