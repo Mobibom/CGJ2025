@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FillColorGameScene.unity
     guid: 7ec47ef8098cc4afaaccf4de59256eaa
+  - enabled: 1
+    path: Assets/Scenes/HuaRongPuzzleScene.unity
+    guid: 985ebc7b8ea6d6748b380e936bda8f65
   m_configObjects: {}

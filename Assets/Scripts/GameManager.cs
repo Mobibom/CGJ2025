@@ -12,7 +12,8 @@ public enum Enum_SceneState
     Room1,
     Room2,
 
-    Game1
+    Game1,
+    HuaRongPuzzleGame
 }
 
 public class SceneStateData
@@ -110,6 +111,12 @@ public class GameManager : BaseManager<GameManager>
         SceneState = Enum_SceneState.Game1;
     }
 
+    private void OnHuaRongPuzzleSceneLoaded()
+    {
+        Debug.Log("HuaRongPuzzle 场景加载完成");
+        SceneState = Enum_SceneState.HuaRongPuzzleGame;
+    }
+
     private void OnSceneStateChanged(SceneStateData data)
     {
         if (data.state == SceneState)
@@ -138,6 +145,12 @@ public class GameManager : BaseManager<GameManager>
                 data.callBack += OnGame1SceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("FillColorGameScene", data.callBack);
                 break;
+            
+            case Enum_SceneState.HuaRongPuzzleGame:
+                data.callBack += OnHuaRongPuzzleSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("HuaRongPuzzleScene", data.callBack);
+                break;
+                
 
             default:
                 Debug.LogError("SceneState Error");

@@ -223,9 +223,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1676675915}
-  - component: {fileID: 1676675916}
+  - component: {fileID: 1676675917}
   m_Layer: 0
-  m_Name: Main
+  m_Name: HuaRongPuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,7 +246,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1676675916
+--- !u!114 &1676675917
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1676675914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54469cc002999944ca977bfd55708d26, type: 3}
+  m_Script: {fileID: 11500000, guid: f53d4c7ff5da93c49b1da5c9e12019e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
