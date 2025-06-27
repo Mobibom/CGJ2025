@@ -167,6 +167,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: 5
+  barriers:
+  - {x: 0, y: 4}
+  - {x: 2, y: 3}
+  - {x: 3, y: 0}
+  - {x: 4, y: 2}
   cellMaterial: {fileID: 0}
   cellSize: 1
   fillColor: {r: 0, g: 0, b: 1, a: 1}

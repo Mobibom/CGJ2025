@@ -17,7 +17,11 @@ namespace Games
 
     public class FillColorGame : MonoBehaviour
     {
-        [Header("游戏设置")] [SerializeField] private int gridSize = 7; // NxN矩阵大小
+        [Header("游戏设置")] [SerializeField] private int gridSize = 5; // NxN矩阵大小
+
+        [SerializeField] private List<Vector2> barriers = new(
+            new[] { new Vector2(1, 1), new Vector2(2, 2), new Vector2(3, 3) }); // 障碍物位置列表
+
         [SerializeField] private Material cellMaterial; // 单元格材质
         [SerializeField] private float cellSize = 1f; // 单元格大小
         private GameObject[,] cellObjects; // 存储单元格游戏对象
@@ -43,7 +47,7 @@ namespace Games
         {
             EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
             EventCenter.GetInstance().AddEventListener<Vector3>("鼠标移动", OnMouseMove);
-            InitializeGame();
+            ResetGame();
         }
 
         private void InitializeGame()
@@ -87,6 +91,36 @@ namespace Games
             isGameOver = false;
             filledCount = 0;
             Debug.Log($"初始化 {gridSize}x{gridSize} 网格游戏");
+        }
+
+        public void ResetGame()
+        {
+            // 重置游戏状态
+            InitializeGame();
+            currentPosition = Vector2Int.zero;
+            availableDirections.Clear();
+            filledCells.Clear();
+            isGameStarted = false;
+            isGameOver = false;
+            filledCount = 0;
+            lastDirectionRenderer.Clear();
+
+            // 添加障碍物
+            foreach (var barrier in barriers)
+            {
+                SetBarrier((int)barrier.x, (int)barrier.y);
+            }
+
+            Debug.Log("游戏已重置");
+        }
+
+        private void SetBarrier(int x, int y)
+        {
+            if (!IsWithinBounds(x, y)) return;
+
+            var rr = cellObjects[x, y].GetComponent<Renderer>();
+            gameGrid[x, y].isFilled = true; // 设置为障碍
+            rr.material.color = Color.red; // 设置障碍颜色
         }
 
         private bool IsWithinBounds(int x, int y)
@@ -194,7 +228,7 @@ namespace Games
 
         private void StartGameAt(int x, int y)
         {
-            if (!IsWithinBounds(x, y)) return;
+            if (!IsWithinBounds(x, y) || gameGrid[x, y].isFilled) return;
 
             gameGrid[x, y].isFilled = true;
             gameGrid[x, y].isStart = true;
