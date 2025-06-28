@@ -15,7 +15,8 @@ public enum Enum_SceneState
     Game1,
 
     NumberGraph,
-    HuaRongPuzzleGame
+    HuaRongPuzzleGame,
+    MatchThreeGame,
 }
 
 public class SceneStateData
@@ -128,6 +129,12 @@ public class GameManager : BaseManager<GameManager>
         SceneState = Enum_SceneState.NumberGraph;
     }
 
+    private void OnMatchThreeGameSceneLoaded()
+    {
+        Debug.Log("MatchThreeGame 场景加载完成");
+        SceneState = Enum_SceneState.MatchThreeGame;
+        UIManager.GetInstance().ShowPanel<MatchThreeGamePanel>("Games/MatchThreeGamePanel", E_UI_Layer.Top);
+    }
     private void OnHuaRongPuzzleSceneLoaded()
     {
         Debug.Log("HuaRongPuzzle 场景加载完成");
@@ -171,6 +178,11 @@ public class GameManager : BaseManager<GameManager>
             case Enum_SceneState.NumberGraph:
                 data.callBack += OnNumberGraphSceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("NumberGraphScene", data.callBack);
+                break;
+
+            case Enum_SceneState.MatchThreeGame:
+                data.callBack += OnMatchThreeGameSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("MatchThreeGameScene", data.callBack);
                 break;
 
             default:
