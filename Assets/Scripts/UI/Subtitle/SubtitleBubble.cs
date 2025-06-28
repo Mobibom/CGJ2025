@@ -36,13 +36,16 @@ namespace UI.Subtitle
         /// <summary>
         /// 初始化气泡内容和跟随目标。
         /// </summary>
-        public void Init(Sprite bgSprite, List<DialogueEntry> entries, Transform followTarget = null,
+        public void Init(Sprite bgSprite, List<DialogueEntry> entries, Transform followTarget,
+            Vector2 offset,
             System.Action onFinish = null)
         {
             this.dialogues = entries;
             this.followTarget = followTarget;
             this.onFinish = onFinish;
             this.backgroundSprite = bgSprite;
+            (this.offset.x, this.offset.y) = (offset.x, offset.y);
+
             currentIndex = 0;
             ShowCurrentLine();
             if (bubbleButton != null)
@@ -116,9 +119,7 @@ namespace UI.Subtitle
         {
             if (followTarget != null)
             {
-                Vector3 worldPos = followTarget.position + offset;
-                Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-                transform.position = screenPos;
+                bubbleButton.transform.localPosition = offset;
             }
         }
     }

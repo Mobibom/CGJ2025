@@ -46,7 +46,8 @@ namespace ProjectBase.Subtitle
         // 由物品调用，传入对话内容和跟随目标
         public void ShowSubtitle(SubtitleType type, Sprite bgSprite,
             List<DialogueEntry> entries,
-            Transform followTarget)
+            Transform followTarget,
+            Vector2 offset)
         {
             if (currentSubtitlePrefab)
             {
@@ -60,7 +61,7 @@ namespace ProjectBase.Subtitle
                 case SubtitleType.Bubble:
                 {
                     var sub = go.GetComponent<SubtitleBubble>();
-                    sub.Init(bgSprite, entries, followTarget, () =>
+                    sub.Init(bgSprite, entries, followTarget, offset, () =>
                     {
                         Object.Destroy(currentSubtitlePrefab);
                         currentSubtitlePrefab = null;
@@ -70,7 +71,7 @@ namespace ProjectBase.Subtitle
                 case SubtitleType.HalfScreen:
                 {
                     var sub = go.GetComponent<SubtitleHalfScreen>();
-                    sub.Init(bgSprite, entries, followTarget, () =>
+                    sub.Init(bgSprite, entries, followTarget, offset, () =>
                     {
                         Object.Destroy(currentSubtitlePrefab);
                         currentSubtitlePrefab = null;

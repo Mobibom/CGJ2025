@@ -33,7 +33,8 @@ namespace UI.Subtitle
         private int lastCharCount = 0;
         private string lastName = null;
 
-        public void Init(Sprite bgSprite, List<DialogueEntry> entries, Transform followTarget = null,
+        public void Init(Sprite bgSprite, List<DialogueEntry> entries, Transform followTarget,
+            Vector2 offset,
             System.Action onFinish = null)
         {
             this.dialogues = entries;
