@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UI.Subtitle;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
 namespace ProjectBase.Subtitle
@@ -23,26 +24,40 @@ namespace ProjectBase.Subtitle
 
     public class SubtitleMgr : BaseManager<SubtitleMgr>
     {
-        public static SubtitleMgr Instance { get; private set; }
+        private GameObject currentSubtitlePrefab; // 当前使用的字幕预制体
 
         // 由物品调用，传入对话内容和跟随目标
-        public void ShowSubtitle(SubtitleType type, GameObject prefab, List<DialogueEntry> entries,
+        public void ShowSubtitle(SubtitleType type, GameObject prefab, Sprite bgSprite,
+            List<DialogueEntry> entries,
             Transform followTarget)
         {
-            var go = Object.Instantiate(prefab, followTarget);
+            if (currentSubtitlePrefab)
+            {
+                return; // 如果当前已经有字幕在显示，则不再创建新的
+            }
 
+            var go = Object.Instantiate(prefab, followTarget);
+            currentSubtitlePrefab = go;
             switch (type)
             {
                 case SubtitleType.Bubble:
                 {
                     var sub = go.GetComponent<SubtitleBubble>();
-                    sub.Init(entries, followTarget, () => { });
+                    sub.Init(bgSprite, entries, followTarget, () =>
+                    {
+                        Object.Destroy(currentSubtitlePrefab);
+                        currentSubtitlePrefab = null;
+                    });
                     break;
                 }
                 case SubtitleType.HalfScreen:
                 {
                     var sub = go.GetComponent<UI.Subtitle.Subtitle>();
-                    sub.Init(entries, followTarget, () => { });
+                    sub.Init(bgSprite, entries, followTarget, () =>
+                    {
+                        Object.Destroy(currentSubtitlePrefab);
+                        currentSubtitlePrefab = null;
+                    });
                     break;
                 }
                 case SubtitleType.FullScreen:

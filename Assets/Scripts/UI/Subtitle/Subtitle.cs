@@ -33,10 +33,12 @@ namespace UI.Subtitle
         private int lastCharCount = 0;
         private string lastName = null;
 
-        public void Init(List<DialogueEntry> entries, Transform followTarget = null, System.Action onFinish = null)
+        public void Init(Sprite bgSprite, List<DialogueEntry> entries, Transform followTarget = null,
+            System.Action onFinish = null)
         {
             this.dialogues = entries;
             this.onFinish = onFinish;
+            this.backgroundSprite = bgSprite;
             currentIndex = 0;
             ShowDialogue(0);
         }
@@ -121,6 +123,12 @@ namespace UI.Subtitle
             if (currentIndex < dialogues.Count)
             {
                 ShowDialogue(currentIndex);
+            }
+            else
+            {
+                // 对话结束，执行回调
+                onFinish?.Invoke();
+                Destroy(gameObject); // 销毁当前对话框
             }
             // 可根据需要添加对话结束后的处理
         }
