@@ -1,19 +1,12 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using ProjectBase.Subtitle;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Subtitle
 {
-    [System.Serializable]
-    public class DialogueEntry
-    {
-        public string name; // 说话者名字
-        public Sprite avatar; // 可选头像
-        [TextArea] public string content; // 对话内容
-    }
-
     public class Subtitle : MonoBehaviour
     {
         [Header("UI 元素")] [SerializeField] private Image backgroundImage;
@@ -29,6 +22,8 @@ namespace UI.Subtitle
 
         [Header("对话序列")] [SerializeField] private List<DialogueEntry> dialogues;
 
+        private System.Action onFinish;
+
         private int currentIndex = 0;
 
         private Tween typingTween;
@@ -38,8 +33,11 @@ namespace UI.Subtitle
         private int lastCharCount = 0;
         private string lastName = null;
 
-        void Start()
+        public void Init(List<DialogueEntry> entries, Transform followTarget = null, System.Action onFinish = null)
         {
+            this.dialogues = entries;
+            this.onFinish = onFinish;
+            currentIndex = 0;
             ShowDialogue(0);
         }
 
@@ -113,6 +111,7 @@ namespace UI.Subtitle
             {
                 nameText.text = showName;
             }
+
             lastName = showName;
         }
 
