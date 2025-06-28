@@ -1,12 +1,9 @@
 using DG.Tweening;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MatchThreeGamePanel : BasePanel
 {
-    private int eliminationCount = 0; // 记录消除的格子数量
-
     public enum CellColor
     {
         Red,
@@ -22,6 +19,11 @@ public class MatchThreeGamePanel : BasePanel
     /// </summary>
     private CellColor[,] gridColors;
 
+    /// <summary>
+    /// 记录消除的格子数量
+    /// </summary>
+    private int eliminationCount = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,9 @@ public class MatchThreeGamePanel : BasePanel
 
     private void Initialize()
     {
+        eliminationCount = 0; // 重置消除计数
+
+        // 定义一个 7x7 的格子颜色数组，目前是预设的颜色分布
         gridColors = new CellColor[7, 7]
         {
             { CellColor.Purple, CellColor.Purple, CellColor.Purple, CellColor.Blue, CellColor.Green, CellColor.Green, CellColor.Red },
@@ -184,9 +189,15 @@ public class MatchThreeGamePanel : BasePanel
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnClick(string btnName)
     {
-
+        base.OnClick(btnName);
+        switch (btnName)
+        {
+            case "Restart":
+                // 重新开始游戏
+                Initialize(); // 重新初始化游戏面板
+                break;
+        }
     }
 }
