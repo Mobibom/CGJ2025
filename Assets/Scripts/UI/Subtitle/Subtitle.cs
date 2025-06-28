@@ -19,17 +19,21 @@ namespace UI.Subtitle
         [SerializeField] private Image avatarImage;
         [SerializeField] private TextMeshProUGUI contentText;
 
+        [Header("配置")] [SerializeField] private float typingSpeed = 0.05f; // 打字速度，单位为秒
         [Header("资源")] [SerializeField] private Sprite backgroundSprite;
         [SerializeField] private Sprite defaultAvatar;
-        [SerializeField] private List<DialogueEntry> dialogues;
+        [Header("音效")] [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip typeSfx;
+
+        [Header("对话序列")] [SerializeField] private List<DialogueEntry> dialogues;
 
         private int currentIndex = 0;
 
         private Tween typingTween;
-        private float typingSpeed = 0.05f; // 每个字出现的间隔（秒）
         private string fullContent;
         private bool isTyping = false;
         private Sprite lastAvatar = null;
+        private int lastCharCount = 0;
 
         void Start()
         {
@@ -68,6 +72,7 @@ namespace UI.Subtitle
             {
                 avatarImage.sprite = entry.avatar != null ? entry.avatar : avatarImage.sprite;
             }
+
             // 检查头像是否变化，变化则抖动，抖动强度与内容长度相关
             if (lastAvatar != avatarImage.sprite)
             {
@@ -76,12 +81,20 @@ namespace UI.Subtitle
                 avatarImage.rectTransform.DOShakeAnchorPos(0.3f, new Vector2(shakeStrength, shakeStrength),
                     (int)shakeStrength, 90, true);
             }
+
             lastAvatar = avatarImage.sprite;
             fullContent = entry.content;
             if (typingTween != null && typingTween.IsActive()) typingTween.Kill();
             contentText.text = "";
             isTyping = true;
-            typingTween = DOTween.To(() => 0, x => { contentText.text = fullContent.Substring(0, x); },
+            lastCharCount = 0;
+            typingTween = DOTween.To(() => 0, x =>
+                    {
+                        contentText.text = fullContent.Substring(0, x);
+                        if (x <= lastCharCount || x <= 0 || typeSfx == null || audioSource == null) return;
+                        audioSource.PlayOneShot(typeSfx);
+                        lastCharCount = x;
+                    },
                     fullContent.Length,
                     fullContent.Length * typingSpeed)
                 .SetEase(Ease.Linear)
