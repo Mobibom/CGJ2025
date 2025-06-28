@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI.Subtitle
 {
-    public class Subtitle : MonoBehaviour
+    public class SubtitleHalfScreen : MonoBehaviour
     {
         [Header("UI 元素")] [SerializeField] private Image backgroundImage;
         [SerializeField] private Image avatarImage;

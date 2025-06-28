@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 949347661397059597}
   - component: {fileID: 1595359446153734028}
   m_Layer: 0
-  m_Name: Subtitle
+  m_Name: SubtitleHalfScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

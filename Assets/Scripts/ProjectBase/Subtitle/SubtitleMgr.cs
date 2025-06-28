@@ -26,8 +26,25 @@ namespace ProjectBase.Subtitle
     {
         private GameObject currentSubtitlePrefab; // 当前使用的字幕预制体
 
+
+        private GameObject GetPrefab(SubtitleType type)
+        {
+            switch (type)
+            {
+                case SubtitleType.Bubble:
+                    return Resources.Load<GameObject>("Prefab/Subtitle/SubtitleBubble");
+                case SubtitleType.HalfScreen:
+                    return Resources.Load<GameObject>("Prefab/Subtitle/SubtitleHalfScreen");
+                case SubtitleType.FullScreen:
+                    // return Resources.Load<GameObject>("Prefab/Subtitle/SubtitleFullScreen");
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
         // 由物品调用，传入对话内容和跟随目标
-        public void ShowSubtitle(SubtitleType type, GameObject prefab, Sprite bgSprite,
+        public void ShowSubtitle(SubtitleType type, Sprite bgSprite,
             List<DialogueEntry> entries,
             Transform followTarget)
         {
@@ -36,7 +53,7 @@ namespace ProjectBase.Subtitle
                 return; // 如果当前已经有字幕在显示，则不再创建新的
             }
 
-            var go = Object.Instantiate(prefab, followTarget);
+            var go = Object.Instantiate(GetPrefab(type), followTarget);
             currentSubtitlePrefab = go;
             switch (type)
             {
@@ -52,7 +69,7 @@ namespace ProjectBase.Subtitle
                 }
                 case SubtitleType.HalfScreen:
                 {
-                    var sub = go.GetComponent<UI.Subtitle.Subtitle>();
+                    var sub = go.GetComponent<SubtitleHalfScreen>();
                     sub.Init(bgSprite, entries, followTarget, () =>
                     {
                         Object.Destroy(currentSubtitlePrefab);
