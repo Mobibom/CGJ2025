@@ -9,6 +9,7 @@ namespace UI.Subtitle
     [System.Serializable]
     public class DialogueEntry
     {
+        public string name; // 说话者名字
         public Sprite avatar; // 可选头像
         [TextArea] public string content; // 对话内容
     }
@@ -18,6 +19,7 @@ namespace UI.Subtitle
         [Header("UI 元素")] [SerializeField] private Image backgroundImage;
         [SerializeField] private Image avatarImage;
         [SerializeField] private TextMeshProUGUI contentText;
+        [SerializeField] private TextMeshProUGUI nameText;
 
         [Header("配置")] [SerializeField] private float typingSpeed = 0.05f; // 打字速度，单位为秒
         [Header("资源")] [SerializeField] private Sprite backgroundSprite;
@@ -34,6 +36,7 @@ namespace UI.Subtitle
         private bool isTyping = false;
         private Sprite lastAvatar = null;
         private int lastCharCount = 0;
+        private string lastName = null;
 
         void Start()
         {
@@ -103,6 +106,14 @@ namespace UI.Subtitle
                     contentText.text = fullContent;
                     isTyping = false;
                 });
+
+            // 设置说话者名字，若为空则继承上一次的
+            string showName = !string.IsNullOrEmpty(entry.name) ? entry.name : lastName;
+            if (nameText != null)
+            {
+                nameText.text = showName;
+            }
+            lastName = showName;
         }
 
         private void NextDialogue()
