@@ -6,14 +6,11 @@ public class JigsawFragment : MonoBehaviour
 {
     public Vector3 targetPosition;
     public float matchThreshold = 0.1f;
-    private bool isChosen = false;
     private bool alreadyMatched = false;
     // Start is called before the first frame update
     void Start()
     {
-        EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
-        EventCenter.GetInstance().AddEventListener<KeyCode>("某键抬起", OnKeyUp);
-        EventCenter.GetInstance().AddEventListener<Vector3>("鼠标移动", OnMouseMove);
+
     }
 
     // Update is called once per frame
@@ -22,45 +19,7 @@ public class JigsawFragment : MonoBehaviour
 
     }
 
-    void OnKeyDown(KeyCode key)
-    {
-        if (alreadyMatched)
-        {
-            return;
-        }
-        switch (key)
-        {
-            case KeyCode.Mouse0:
-                isChosen = true;
-                // TODO: 处理选中事件, e.g. 显示选中特效
-                break;
-        }
-    }
-
-    void OnKeyUp(KeyCode key)
-    {
-        if (alreadyMatched)
-        {
-            return;
-        }
-        CheckMatch();
-        isChosen = false;
-    }
-
-    void OnMouseMove(Vector3 pos)
-    {
-        if (alreadyMatched)
-        {
-            return;
-        }
-        if (isChosen)
-        {
-            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y,
-                    Camera.main.nearClipPlane + 0.1f));;
-        }
-    }
-
-    void CheckMatch()
+    public void CheckMatch()
     {
         if ((new Vector2(transform.position.x, transform.position.y) -
             new Vector2(targetPosition.x, targetPosition.y)).sqrMagnitude < matchThreshold)
@@ -68,5 +27,10 @@ public class JigsawFragment : MonoBehaviour
             alreadyMatched = true;
             transform.position = targetPosition;
         }
+    }
+
+    public bool getMatchStatus()
+    {
+        return alreadyMatched;
     }
 }
