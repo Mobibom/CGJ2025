@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Jigsaw.unity
     guid: 30be1a3a2a00c476598bd127de2cd112
+  - enabled: 1
+    path: Assets/Scenes/CombinationLock.unity
+    guid: 91ccc390040e04861bf2f1e4fc7cb5fb
   m_configObjects: {}
