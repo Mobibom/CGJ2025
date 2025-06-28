@@ -29,8 +29,8 @@ public class PrefacePanel : BasePanel
             sequence.Append(text.DOFade(1.0f, 1.0f));
             // 等待字幕显示时间
             sequence.AppendInterval(1.0f);
-            // 将字幕淡出
-            sequence.Append(text.DOFade(0.0f, 1.0f));
+            //// 将字幕淡出
+            //sequence.Append(text.DOFade(0.0f, 1.0f));
         }
 
         sequence.AppendInterval(2.0f);
