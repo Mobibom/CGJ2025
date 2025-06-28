@@ -4,6 +4,20 @@ using DG.Tweening;
 
 public class HuaRongPuzzle : MonoBehaviour
 {
+    [Header("配置 Tiles")]
+    [SerializeField] private Sprite[] tileSprites = new Sprite[9]; // 0-8 对应 1-9号图块（最后一个为空）
+    
+    [Header("自定义布局（从左上到右下，填写数字1-9）")]
+    [SerializeField] private int[] customOrder = new int[9]
+    {
+        2, 6, 9,
+        4, 1, 5,
+        8, 3, 7
+    };
+    
+    [Header("是否使用自定义布局")]
+    [SerializeField] private bool useCustomLayout = true;
+    
     private int gridSize = 3;
     private float cellSize = 1f;
     private Color tileColor = Color.white;
@@ -47,7 +61,14 @@ public class HuaRongPuzzle : MonoBehaviour
                 tile.AddComponent<BoxCollider2D>();
 
                 SpriteRenderer sr = tile.AddComponent<SpriteRenderer>();
-                sr.sprite = Resources.Load<Sprite>("HuaRongPuzzle/tile" + number);
+                if (number <= tileSprites.Length && tileSprites[number - 1] != null)
+                {
+                    sr.sprite = tileSprites[number - 1];
+                }
+                else
+                {
+                    Debug.LogWarning($"Tile sprite {number} 未指定");
+                }
                 sr.color = isLast ? emptyColor : tileColor;
 
                 tiles[x, y] = tile;
@@ -58,11 +79,16 @@ public class HuaRongPuzzle : MonoBehaviour
         // 设置右下角为“空格”
         emptyPos = new Vector2Int(gridSize - 1, 0);
         
-        // 打乱顺序
-        // ShuffleTiles();
-        
-        // 设置为演示时的华容道顺序
-        SetCustomLayout();
+        if (useCustomLayout)
+        {
+            // 设置为演示时的华容道顺序
+            SetCustomLayout();
+        }
+        else
+        {
+            // 随机打乱顺序
+            ShuffleTiles();
+        }
     }
     
     private void ShuffleTiles(int steps = 50)
@@ -101,29 +127,29 @@ public class HuaRongPuzzle : MonoBehaviour
 
     private void SetCustomLayout()
     {
-        int[,] customOrder = new int[3, 3]
+        if (customOrder.Length != gridSize * gridSize)
         {
-            { 2, 6, 9 },
-            { 4, 1, 5 },
-            { 8, 3, 7 }
-        };
+            Debug.LogError("自定义顺序长度不合法！");
+            return;
+        }
 
         GameObject[,] newTiles = new GameObject[gridSize, gridSize];
 
-        for (int row = 0; row < gridSize; row++)
+        for (int index = 0; index < customOrder.Length; index++)
         {
-            for (int col = 0; col < gridSize; col++)
-            {
-                int tileNumber = customOrder[row, col];
-                Vector2Int originalPos = FindTileByNumber(tileNumber);
-                GameObject tile = tiles[originalPos.x, originalPos.y];
+            int tileNumber = customOrder[index];
+            int row = index / gridSize;
+            int col = index % gridSize;
 
-                tile.transform.localPosition = new Vector2(col * cellSize, (gridSize - 1 - row) * cellSize);
-                newTiles[col, gridSize - 1 - row] = tile;
+            Vector2Int originalPos = FindTileByNumber(tileNumber);
+            GameObject tile = tiles[originalPos.x, originalPos.y];
 
-                if (tileNumber == 9)
-                    emptyPos = new Vector2Int(col, gridSize - 1 - row);
-            }
+            int y = gridSize - 1 - row;
+            tile.transform.localPosition = new Vector2(col * cellSize, y * cellSize);
+            newTiles[col, y] = tile;
+
+            if (tileNumber == 9)
+                emptyPos = new Vector2Int(col, y);
         }
 
         tiles = newTiles;

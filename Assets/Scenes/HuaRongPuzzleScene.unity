@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 706464936}
   - component: {fileID: 706464935}
   - component: {fileID: 706464934}
+  - component: {fileID: 706464937}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -214,6 +215,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &706464937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706464933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &1676675914
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +303,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53d4c7ff5da93c49b1da5c9e12019e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileSprites:
+  - {fileID: 21300000, guid: 9cee0e084396400499f508c1be90aa18, type: 3}
+  - {fileID: 21300000, guid: 9efc5ebf7dbface429d06b4cd347a964, type: 3}
+  - {fileID: 21300000, guid: 8a9f18ca5cb80fb4788ccee5c200c098, type: 3}
+  - {fileID: 21300000, guid: 299bd0287fe97bd4b9eb4f1872fe5b87, type: 3}
+  - {fileID: 21300000, guid: 7a2a437159d1c834595e83d594aa8f20, type: 3}
+  - {fileID: 21300000, guid: 9848b7bde3cb6de42a94caa9a892d214, type: 3}
+  - {fileID: 21300000, guid: 5aa002e436e3ac644a6a27439f0f43b7, type: 3}
+  - {fileID: 21300000, guid: d2be03e0fecab2d4bb6369304a595b96, type: 3}
+  - {fileID: 21300000, guid: 03473ffb499753d428c0002029b9508d, type: 3}
+  customOrder: 020000000600000009000000040000000100000005000000080000000300000007000000
+  useCustomLayout: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

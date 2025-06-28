@@ -3,7 +3,8 @@ guid: f53d4c7ff5da93c49b1da5c9e12019e9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - huarongPanel00: {fileID: 5585332284415885035, guid: 02f292d62a1dae64caa8975cee358037, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
