@@ -188,7 +188,7 @@ public class SceneLightController : MonoBehaviour
         }
     }
 
-    private void ApplyConfigs(List<SceneLightData> configs)
+    public void ApplyConfigs(List<SceneLightData> configs)
     {
         for (int i = 0; i < lights.Count; i++)
         {

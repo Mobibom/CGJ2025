@@ -37,6 +37,27 @@ public class SceneLightControllerEditor : Editor
             // 使用 myScript.duration 来获取你在 Inspector 中设置的时长
             myScript.SaveDataToConfigC();
         }
+        
+        if (GUILayout.Button("Switch Light to ConfigA"))
+        {
+            // 当按钮被点击时，调用 SceneLightController 实例上的方法
+            // 使用 myScript.duration 来获取你在 Inspector 中设置的时长
+            myScript.ApplyConfigs(myScript.configA);
+        }
+        
+        if (GUILayout.Button("Switch Light to ConfigB"))
+        {
+            // 当按钮被点击时，调用 SceneLightController 实例上的方法
+            // 使用 myScript.duration 来获取你在 Inspector 中设置的时长
+            myScript.ApplyConfigs(myScript.configB);
+        }
+        
+        if (GUILayout.Button("Switch Light to ConfigC"))
+        {
+            // 当按钮被点击时，调用 SceneLightController 实例上的方法
+            // 使用 myScript.duration 来获取你在 Inspector 中设置的时长
+            myScript.ApplyConfigs(myScript.configC);
+        }
 
         // 按钮：Lerp A to B
         // GUILayout.Button("按钮文本") 创建一个按钮
