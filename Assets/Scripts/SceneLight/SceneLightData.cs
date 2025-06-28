@@ -7,8 +7,12 @@ public class SceneLightData
 {
     public Color color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     public float intensity = 1f;
+    public float fallOff = 0.50f;
+   
+    public float fallOffStrength = 1f;
     
-    // public float falloffIntensity = 1f;
+    
+    
     // public float innerAngle = 20f;
     // public float outerAngle = 45f;
     // public float radius = 5f;
@@ -25,6 +29,8 @@ public class SceneLightData
             // outerAngle = Mathf.Lerp(a.outerAngle, b.outerAngle, t),
             // radius = Mathf.Lerp(a.radius, b.radius, t),
             // segments = Mathf.RoundToInt(Mathf.Lerp(a.segments, b.segments, t))
+            fallOffStrength = Mathf.Lerp(a.fallOffStrength, b.fallOffStrength, t),
+            fallOff = Mathf.Lerp(a.fallOff, b.fallOff, t)
         };
     }
 }

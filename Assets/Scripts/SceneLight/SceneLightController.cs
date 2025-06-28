@@ -172,7 +172,6 @@ public class SceneLightController : MonoBehaviour
         for (int i = 0; i < lights.Count; i++)
         {
             ApplyLightData(lights[i], configs[i]);
-            lights[i].intensity = configs[i].intensity;
             
         }
     }
@@ -191,5 +190,31 @@ public class SceneLightController : MonoBehaviour
         {
             light.color = data.color;
         }
+        
+        if (Mathf.Abs(light.falloffIntensity - data.fallOffStrength) > 0.001f) // Use a small epsilon for float comparison
+        {
+            light.falloffIntensity = data.fallOffStrength;
+        }
+        
+        if (Mathf.Abs(light.shapeLightFalloffSize - data.fallOff) > 0.001f) // Use a small epsilon for float comparison
+        {
+            light.shapeLightFalloffSize = data.fallOff;
+        }
+
+        // if (light.lightType != Light2D.LightType.Global)
+        // {
+        //     if (Mathf.Abs(light.falloffIntensity - data.fallOffStrength) > 0.001f) // Use a small epsilon for float comparison
+        //     {
+        //         light.falloffIntensity = data.fallOffStrength;
+        //     }
+        //
+        //     if (light.lightType == Light2D.LightType.Freeform)
+        //     {
+        //         if (Mathf.Abs(light.shapeLightFalloffSize - data.fallOff) > 0.001f) // Use a small epsilon for float comparison
+        //         {
+        //             light.shapeLightFalloffSize = data.fallOff;
+        //         }
+        //     }
+        // }
     }
 }
