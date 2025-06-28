@@ -83,14 +83,10 @@ public class NumberGraph : MonoBehaviour
         {
             case KeyCode.Mouse0:
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Debug.Log(ray.direction);
-                Debug.Log(ray.origin);
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
                     GameObject clickedObject = hit.collider.gameObject;
-                    Debug.Log(clickedObject.name);
                     Tuple<int, int> cellPosition = GetCellPosition(clickedObject);
-                    Debug.Log(cellPosition.Item1 + " " + cellPosition.Item2);
                     int row = cellPosition.Item1;
                     int col = cellPosition.Item2;
                     if (row >= 0 && col >= 0)
