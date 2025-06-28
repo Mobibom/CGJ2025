@@ -55,13 +55,15 @@ public class JigsawFragment : MonoBehaviour
         }
         if (isChosen)
         {
-            transform.position = pos;
+            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y,
+                    Camera.main.nearClipPlane + 0.1f));;
         }
     }
 
     void CheckMatch()
     {
-        if ((transform.position - targetPosition).magnitude < matchThreshold)
+        if ((new Vector2(transform.position.x, transform.position.y) -
+            new Vector2(targetPosition.x, targetPosition.y)).sqrMagnitude < matchThreshold)
         {
             alreadyMatched = true;
             transform.position = targetPosition;

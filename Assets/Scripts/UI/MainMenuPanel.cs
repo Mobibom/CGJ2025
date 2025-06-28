@@ -108,6 +108,14 @@ public class MainMenuPanel : BasePanel
                 });
                 break;
 
+            case "Test":
+                // 隐藏所有面板
+                UIManager.GetInstance().HideAllPanel(() =>
+                {
+                    EventCenter.GetInstance().EventTrigger<SceneStateData>("场景切换", new SceneStateData(Enum_SceneState.Test));
+                });
+                break;
+
             case "AboutButton":
                 // TODO: 显示队伍的关于信息
                 break;

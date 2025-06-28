@@ -17,6 +17,8 @@ public enum Enum_SceneState
     NumberGraph,
     HuaRongPuzzleGame,
     MatchThreeGame,
+
+    Test,
 }
 
 public class SceneStateData
@@ -135,10 +137,17 @@ public class GameManager : BaseManager<GameManager>
         SceneState = Enum_SceneState.MatchThreeGame;
         UIManager.GetInstance().ShowPanel<MatchThreeGamePanel>("Games/MatchThreeGamePanel", E_UI_Layer.Top);
     }
+
     private void OnHuaRongPuzzleSceneLoaded()
     {
         Debug.Log("HuaRongPuzzle 场景加载完成");
         SceneState = Enum_SceneState.HuaRongPuzzleGame;
+    }
+
+    private void OnTestSceneLoaded()
+    {
+        Debug.Log("Test 场景加载完成");
+        SceneState = Enum_SceneState.Test;
     }
 
     private void OnSceneStateChanged(SceneStateData data)
@@ -183,6 +192,12 @@ public class GameManager : BaseManager<GameManager>
             case Enum_SceneState.MatchThreeGame:
                 data.callBack += OnMatchThreeGameSceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("MatchThreeGameScene", data.callBack);
+                break;
+
+            case Enum_SceneState.Test:
+                data.callBack += OnTestSceneLoaded;
+                // TODO: 修改为测试场景的名称
+                ScenesMgr.GetInstance().LoadScene("Jigsaw", data.callBack);
                 break;
 
             default:
