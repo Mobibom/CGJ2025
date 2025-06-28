@@ -1,60 +1,105 @@
-using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-[System.Serializable]
-public class DialogueEntry
+namespace UI.Subtitle
 {
-    public Sprite avatar; // 可选头像
-    [TextArea]
-    public string content; // 对话内容
-}
-
-public class Subtitle : MonoBehaviour
-{
-    [Header("UI 元素")]
-    [SerializeField] private Image backgroundImage;
-    [SerializeField] private Image avatarImage;
-    [SerializeField] private TextMeshProUGUI contentText;
-
-    [Header("资源")]
-    [SerializeField] private Sprite backgroundSprite;
-    [SerializeField] private Sprite defaultAvatar;
-    [SerializeField] private List<DialogueEntry> dialogues;
-
-    private int currentIndex = 0;
-
-    void Start()
+    [System.Serializable]
+    public class DialogueEntry
     {
-        ShowDialogue(0);
+        public Sprite avatar; // 可选头像
+        [TextArea] public string content; // 对话内容
     }
 
-    void Update()
+    public class Subtitle : MonoBehaviour
     {
-        if (Input.GetMouseButtonDown(0))
+        [Header("UI 元素")] [SerializeField] private Image backgroundImage;
+        [SerializeField] private Image avatarImage;
+        [SerializeField] private TextMeshProUGUI contentText;
+
+        [Header("资源")] [SerializeField] private Sprite backgroundSprite;
+        [SerializeField] private Sprite defaultAvatar;
+        [SerializeField] private List<DialogueEntry> dialogues;
+
+        private int currentIndex = 0;
+
+        private Tween typingTween;
+        private float typingSpeed = 0.05f; // 每个字出现的间隔（秒）
+        private string fullContent;
+        private bool isTyping = false;
+        private Sprite lastAvatar = null;
+
+        void Start()
         {
-            NextDialogue();
+            ShowDialogue(0);
         }
-    }
 
-    private void ShowDialogue(int index)
-    {
-        if (dialogues == null || dialogues.Count == 0 || index >= dialogues.Count) return;
-        var entry = dialogues[index];
-        backgroundImage.sprite = backgroundSprite;
-        avatarImage.sprite = entry.avatar != null ? entry.avatar : defaultAvatar;
-        contentText.text = entry.content;
-    }
-
-    private void NextDialogue()
-    {
-        currentIndex++;
-        if (currentIndex < dialogues.Count)
+        void Update()
         {
-            ShowDialogue(currentIndex);
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (isTyping)
+                {
+                    // 跳过动画，直接显示完整内容
+                    typingTween.Kill();
+                    contentText.text = fullContent;
+                    isTyping = false;
+                }
+                else
+                {
+                    NextDialogue();
+                }
+            }
         }
-        // 可根据需要添加对话结束后的处理
+
+        private void ShowDialogue(int index)
+        {
+            if (dialogues == null || dialogues.Count == 0 || index >= dialogues.Count) return;
+            var entry = dialogues[index];
+            backgroundImage.sprite = backgroundSprite;
+            // 头像逻辑：第一张为空用默认，后续为空延续前一张
+            if (index == 0)
+            {
+                avatarImage.sprite = entry.avatar != null ? entry.avatar : defaultAvatar;
+            }
+            else
+            {
+                avatarImage.sprite = entry.avatar != null ? entry.avatar : avatarImage.sprite;
+            }
+            // 检查头像是否变化，变化则抖动，抖动强度与内容长度相关
+            if (lastAvatar != avatarImage.sprite)
+            {
+                avatarImage.transform.DOComplete(); // 停止之前的动画
+                float shakeStrength = Mathf.Clamp(entry.content.Length * 0.8f, 20f, 90f); // 根据内容长度调整抖动强度
+                avatarImage.rectTransform.DOShakeAnchorPos(0.3f, new Vector2(shakeStrength, shakeStrength),
+                    (int)shakeStrength, 90, true);
+            }
+            lastAvatar = avatarImage.sprite;
+            fullContent = entry.content;
+            if (typingTween != null && typingTween.IsActive()) typingTween.Kill();
+            contentText.text = "";
+            isTyping = true;
+            typingTween = DOTween.To(() => 0, x => { contentText.text = fullContent.Substring(0, x); },
+                    fullContent.Length,
+                    fullContent.Length * typingSpeed)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
+                {
+                    contentText.text = fullContent;
+                    isTyping = false;
+                });
+        }
+
+        private void NextDialogue()
+        {
+            currentIndex++;
+            if (currentIndex < dialogues.Count)
+            {
+                ShowDialogue(currentIndex);
+            }
+            // 可根据需要添加对话结束后的处理
+        }
     }
 }
