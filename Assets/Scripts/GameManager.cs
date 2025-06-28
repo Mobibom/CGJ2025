@@ -38,6 +38,8 @@ public class GameManager : BaseManager<GameManager>
 {
     public Enum_SceneState SceneState { get; set; }
 
+    private bool isInit = false;
+
     public GameManager()
     {
         MonoMgr.GetInstance().AddUpdateListener(Update);
@@ -73,6 +75,11 @@ public class GameManager : BaseManager<GameManager>
 
     public void Init()
     {
+        if (isInit)
+        {
+            return;
+        }
+
         Debug.Log("Init");
         // 下面这段注释掉，影响debug的时候使用，
         // 可以在GameManger.prefab里设置
@@ -83,6 +90,8 @@ public class GameManager : BaseManager<GameManager>
         
         if(SceneState == Enum_SceneState.MainMenu)
             OnMainMenuSceneLoaded();
+
+        isInit = true;
     }
 
     private void OnMainMenuSceneLoaded()
