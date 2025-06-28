@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MatchThreeGameScene.unity
     guid: c00efd96570d7b7409dacb14ff7f8440
+  - enabled: 1
+    path: Assets/Scenes/Jigsaw.unity
+    guid: 30be1a3a2a00c476598bd127de2cd112
   m_configObjects: {}
