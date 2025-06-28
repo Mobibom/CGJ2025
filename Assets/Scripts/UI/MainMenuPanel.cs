@@ -61,14 +61,8 @@ public class MainMenuPanel : BasePanel
                         sequence.Join(sprite.transform.DOScale(2.0f, 3.0f));
                     }
 
-                    // 缩放结束后，屏幕逐渐变黑
-                    // 这里显示 PrefacePanel
+                    // 缩放结束后，显示 PrefacePanel
                     sequence.AppendCallback(() => {
-                        foreach (var sprite in allSprites)
-                        {
-                            // 隐藏所有 sprite
-                            sprite.gameObject.SetActive(false);
-                        }
                         UIManager.GetInstance().ShowPanel<PrefacePanel>("MainMenu/PrefacePanel", E_UI_Layer.Top);
                     });
                 });

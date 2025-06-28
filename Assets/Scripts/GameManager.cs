@@ -102,21 +102,21 @@ public class GameManager : BaseManager<GameManager>
         Debug.Log("主菜单场景加载完成");
         SceneState = Enum_SceneState.MainMenu;
         // MusicMgr.GetInstance().PlayBkMusic("");
-        UIManager.GetInstance().ShowPanel<MainMenuPanel>("MainMenu/MainMenuPanel", E_UI_Layer.Top);
+        UIManager.GetInstance().ShowPanel<MainMenuPanel>("MainMenu/MainMenuPanel", E_UI_Layer.Mid);
     }
 
     private void OnRoomSelectionSceneLoaded()
     {
         Debug.Log("房间选择场景加载完成");
         SceneState = Enum_SceneState.RoomSelection;
-        UIManager.GetInstance().ShowPanel<RoomSelectionPanel>("Room/RoomSelectionPanel", E_UI_Layer.Top);
+        UIManager.GetInstance().ShowPanel<RoomSelectionPanel>("Room/RoomSelectionPanel", E_UI_Layer.Mid);
     }
 
     private void OnDemoRoomSceneLoaded()
     {
         Debug.Log("DemoRoom 场景加载完成");
         SceneState = Enum_SceneState.DemoRoom;
-        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Top);
+        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
     }
 
     private void OnGame1SceneLoaded()
