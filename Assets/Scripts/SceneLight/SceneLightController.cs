@@ -156,6 +156,27 @@ public class SceneLightController : MonoBehaviour
     public void LerpAToB(float duration) => StartLerp(configA, configB, duration);
     public void LerpBToC(float duration) => StartLerp(configB, configC, duration);
     public void LerpCToA(float duration) => StartLerp(configC, configA, duration);
+    
+    public void SaveDataToConfigA() => SaveLightDataToConfig(configA);
+    public void SaveDataToConfigB() => SaveLightDataToConfig(configB);
+    public void SaveDataToConfigC() => SaveLightDataToConfig(configC);
+
+    public void SaveLightDataToConfig(List<SceneLightData> config)
+    {
+
+        while (lights.Count > config.Count)
+        {
+            config.Add(new SceneLightData());
+        }
+        
+        for (int i = 0; i < lights.Count; i++)
+        {
+            config[i].intensity = lights[i].intensity;
+            config[i].color = lights[i].color;
+            config[i].fallOff = lights[i].shapeLightFalloffSize;
+            config[i].fallOffStrength = lights[i].falloffIntensity;
+        }
+    }
 
     private void LerpConfigs(List<SceneLightData> from, List<SceneLightData> to, float t)
     {
