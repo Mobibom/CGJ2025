@@ -46,6 +46,7 @@ namespace UI.Subtitle
             this.backgroundSprite = bgSprite;
             (this.offset.x, this.offset.y) = (offset.x, offset.y);
 
+            this.bubbleButton.transform.localPosition = this.offset;
             currentIndex = 0;
             ShowCurrentLine();
             if (bubbleButton != null)
@@ -117,10 +118,6 @@ namespace UI.Subtitle
 
         private void Update()
         {
-            if (followTarget != null)
-            {
-                bubbleButton.transform.localPosition = offset;
-            }
         }
     }
 }
