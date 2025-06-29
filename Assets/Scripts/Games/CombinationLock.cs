@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class CombinationLock : MonoBehaviour
@@ -21,10 +18,27 @@ public class CombinationLock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        number1st = transform.Find("Number_1st").GetComponent<ConbinationLockNumber>();
-        number2nd = transform.Find("Number_2nd").GetComponent<ConbinationLockNumber>();
-        number3rd = transform.Find("Number_3rd").GetComponent<ConbinationLockNumber>();
-        number4th = transform.Find("Number_4th").GetComponent<ConbinationLockNumber>();
+        var numbers = GetComponentsInChildren<ConbinationLockNumber>();
+        if (numbers == null)
+        {
+            Debug.LogError("未找到 ConbinationLockNumber 组件");
+            return;
+        }
+
+        if (numbers.Length < 4)
+        {
+            Debug.LogError("ConbinationLockNumber 组件数量不足，至少需要 4 个");
+            return;
+        }
+
+        number1st = numbers[0];
+        number2nd = numbers[1];
+        number3rd = numbers[2];
+        number4th = numbers[3];
+
+        var canvas = GetComponent<Canvas>();
+        canvas.worldCamera = Camera.main;
+        canvas.sortingLayerID = SortingLayer.NameToID("Game");
     }
 
     // Update is called once per frame

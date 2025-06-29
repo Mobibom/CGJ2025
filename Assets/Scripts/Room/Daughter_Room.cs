@@ -5,9 +5,7 @@ using ProjectBase.Subtitle;
 
 public class Daughter_Room : MonoBehaviour
 {
-    
     public GameObject SceneLightMangager; // 确保在 Inspector 中赋值
-    public Camera MainCamera; // 确保在 Inspector 中赋值
 
     private SceneLightController slc;
 
@@ -27,8 +25,7 @@ public class Daughter_Room : MonoBehaviour
     public void OnDiraySubtitleFinished()
     {
         Debug.Log("日记本字幕已结束");
-        var instance = ResMgr.GetInstance().Load<GameObject>("Prefab/Games/CombinationLock");
-        MainCamera.gameObject.transform.position = new Vector3(400, 300, -10);
+        var instance = ResMgr.GetInstance().Load<GameObject>("Prefab/Games/CombinationLockCanvas");
 
         var combinationLockGame = instance.GetComponentInChildren<CombinationLock>(true);
         if (combinationLockGame == null)
@@ -40,7 +37,7 @@ public class Daughter_Room : MonoBehaviour
         combinationLockGame.SetFinishedCallback(() =>
         {
             Debug.Log("组合锁游戏完成，触发下一步剧情");
-            MainCamera.gameObject.transform.position = new Vector3(0, 0, -10);
+            Camera.main.gameObject.transform.position = new Vector3(0, 0, -10);
             Destroy(instance);
             SubtitleMgr.GetInstance().ShowSubtitle(SubtitleType.Bubble, null,
                 new List<DialogueEntry>

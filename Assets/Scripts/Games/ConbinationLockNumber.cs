@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,15 +6,15 @@ public class ConbinationLockNumber : MonoBehaviour
 {
     public int number = 0;
     public TextMeshProUGUI text;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        
+        GetComponent<Button>().onClick.AddListener(OnNumberButtonClick);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnNumberButtonClick()
     {
-        
+        number = (number + 1 + 10) % 10;
+        text.SetText(number.ToString());
     }
 }
