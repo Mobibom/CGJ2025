@@ -49,10 +49,19 @@ public class NumberGraph : MonoBehaviour
                 cell.transform.SetParent(transform);
                 cell.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
                 cell.GetComponent<SpriteRenderer>().color = Color.white;
-
-                unlitmat =  new Material(Shader.Find("Sprites/Sprite-Unlit-Default"));
-                if(unlitmat != null)
-                    cell.GetComponent<SpriteRenderer>().material = unlitmat;
+                try
+                {
+                    unlitmat =  new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"));
+                    if(unlitmat != null)
+                        cell.GetComponent<SpriteRenderer>().material = unlitmat;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                
+                
                 cells[i, j] = cell;
             }
         }

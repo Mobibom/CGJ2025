@@ -65,7 +65,7 @@ namespace Games.HhuaRongPuzzle
                     tile.AddComponent<BoxCollider2D>();
 
                     SpriteRenderer sr = tile.AddComponent<SpriteRenderer>();
-                    unlitmat = new Material(Shader.Find("Sprites/Sprite-Unlit-Default"));
+                    unlitmat = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"));
                     if( unlitmat != null )
                         sr.material = unlitmat;
                     if (number <= tileSprites.Length && tileSprites[number - 1] != null)
