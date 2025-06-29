@@ -41,11 +41,20 @@ public class PrefacePanel : BasePanel
             {
                 sprite.gameObject.SetActive(false);
             }
-        }).AppendInterval(1.0f).Append(blackImage.DOFade(0.0f, 3.0f)).AppendCallback(() =>
+        }).AppendInterval(1.0f);
+
+        foreach (var text in prefaceTexts)
+        {
+            sequence.Join(text.DOFade(0.0f, 1.0f));
+        }
+
+        sequence.AppendInterval(1.2f).AppendCallback(() =>
         {
             // 触发进入房间选择场景的事件，GameManager 会监听这个事件，并加载场景
             EventCenter.GetInstance().EventTrigger<SceneStateData>("场景切换", new SceneStateData(Enum_SceneState.RoomSelection));
-
+        }).Append(blackImage.DOFade(0.0f, 3.0f))
+        .AppendCallback(() =>
+        {
             // 隐藏所有面板
             UIManager.GetInstance().HideAllPanel(null);
         });
