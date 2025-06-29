@@ -178,7 +178,7 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.09907407
+    y: 0.1
     width: 1.5270834
     height: 0.3333333
   near clip plane: 0.3
@@ -334,7 +334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2093909959762194492, guid: a000f54e3ea56b446824726404ab3579, type: 3}
       propertyPath: m_SwitchToScene
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2321995830994441449, guid: a000f54e3ea56b446824726404ab3579, type: 3}
       propertyPath: m_SwitchToScene
