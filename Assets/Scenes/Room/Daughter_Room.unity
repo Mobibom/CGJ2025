@@ -950,7 +950,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2ec04f24721485896dafa851dd2c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneLightMangager: {fileID: 1825425075}
+  SceneLightMangager: {fileID: 4005965879313513104, guid: 6788e8d2e43283c4fb301691db50115a, type: 3}
+  MainCamera: {fileID: 1302954205}
 --- !u!4 &1425420140
 Transform:
   m_ObjectHideFlags: 0

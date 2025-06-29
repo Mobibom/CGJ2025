@@ -7,6 +7,7 @@ public class Daughter_Room : MonoBehaviour
 {
     
     public GameObject SceneLightMangager; // 确保在 Inspector 中赋值
+    public Camera MainCamera; // 确保在 Inspector 中赋值
 
     private SceneLightController slc;
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class Daughter_Room : MonoBehaviour
     {
         Debug.Log("日记本字幕已结束");
         var instance = ResMgr.GetInstance().Load<GameObject>("Prefab/Games/CombinationLock");
+        MainCamera.gameObject.transform.position = new Vector3(400, 300, -10);
 
         var combinationLockGame = instance.GetComponentInChildren<CombinationLock>(true);
         if (combinationLockGame == null)
@@ -36,6 +38,8 @@ public class Daughter_Room : MonoBehaviour
         combinationLockGame.SetFinishedCallback(() =>
         {
             Debug.Log("组合锁游戏完成，触发下一步剧情");
+            MainCamera.gameObject.transform.position = new Vector3(0, 0, -10);
+            Destroy(instance);
             SubtitleMgr.GetInstance().ShowSubtitle(SubtitleType.Bubble, null,
                 new List<DialogueEntry>
                 {
@@ -71,14 +75,14 @@ public class Daughter_Room : MonoBehaviour
     private void GameFinished()
     {
         // 查找“女儿”对象
-        var priestObj = GameObject.Find("Layer(daughter)");
+        var priestObj = GameObject.Find("Layer(background)");
         if (priestObj != null)
         {
             var sr = priestObj.GetComponent<SpriteRenderer>();
             if (sr != null)
             {
                 // TODO: 切换到死亡状态女儿图片
-                var newSprite = Resources.Load<Sprite>("Textures/Room/PriestRoom/4-3(死亡状态牧师)");
+                var newSprite = Resources.Load<Sprite>("Textures/Room/DaughterRoom/daugtersroom2");
                 if (newSprite != null)
                 {
                     sr.sprite = newSprite;
@@ -90,12 +94,12 @@ public class Daughter_Room : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Layer(Daughter)没有SpriteRenderer组件");
+                Debug.LogWarning("Layer(background)没有SpriteRenderer组件");
             }
         }
         else
         {
-            Debug.LogWarning("未找到Layer(Daughter)对象");
+            Debug.LogWarning("未找到Layer(background)对象");
         }
         
         slc.LerpBToC(1.5f); 

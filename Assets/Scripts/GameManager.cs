@@ -244,7 +244,7 @@ public class GameManager : BaseManager<GameManager>
 
             case Enum_SceneState.Test:
                 data.callBack += OnTestSceneLoaded;
-                ScenesMgr.GetInstance().LoadScene("CombinationLock", data.callBack);
+                ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
                 break;
             
             case Enum_SceneState.Priest_Room:
