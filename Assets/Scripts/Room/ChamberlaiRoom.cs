@@ -7,12 +7,13 @@ public class ChamberlaiRoom : MonoBehaviour
 {
     public GameObject SceneLightMangager; // 确保在 Inspector 中赋值
     private SceneLightController slc;
+    public float duration = 5.0f;
     
     
     void Start()
     {
         slc = SceneLightMangager.GetComponent<SceneLightController>();
-        slc.LerpAToB(1.5f); 
+        slc.LerpAToB(duration); 
     }
     
     // 小游戏成功后调用slc.LerpBToc(1.5f);
@@ -59,6 +60,6 @@ public class ChamberlaiRoom : MonoBehaviour
             Debug.LogWarning("未找到Layer(background)对象");
         }
         
-        slc.LerpBToC(1.5f);
+        slc.LerpBToC(duration);
     }
 }
