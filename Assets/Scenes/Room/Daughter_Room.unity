@@ -670,9 +670,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: -0.026578072
-    width: 1.9140188
-    height: 1.1960132
+    y: 0.12993039
+    width: 1.3368146
+    height: 0.83526677
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -950,7 +950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2ec04f24721485896dafa851dd2c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneLightMangager: {fileID: 4005965879313513104, guid: 6788e8d2e43283c4fb301691db50115a, type: 3}
+  SceneLightMangager: {fileID: 1825425075}
   MainCamera: {fileID: 1302954205}
 --- !u!4 &1425420140
 Transform:
