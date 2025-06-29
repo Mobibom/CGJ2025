@@ -23,6 +23,9 @@ public enum Enum_SceneState
     HuaRongPuzzleGame,
     MatchThreeGame,
 
+    DauterRoom,
+    PriestRoom,
+
     Test,
 }
 
@@ -185,6 +188,20 @@ public class GameManager : BaseManager<GameManager>
         SceneState = Enum_SceneState.Daughter_Room;
     }
 
+    private void OnDauterRoomSceneLoaded()
+    {
+        Debug.Log("DauterRoom 场景加载完成");
+        SceneState = Enum_SceneState.DauterRoom;
+        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
+    }
+
+    private void OnPriestRoomSceneLoaded()
+    {
+        Debug.Log("PriestRoom 场景加载完成");
+        SceneState = Enum_SceneState.PriestRoom;
+        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
+    }
+
     private void OnSceneStateChanged(SceneStateData data)
     {
         if (data.state == SceneState)
@@ -258,6 +275,16 @@ public class GameManager : BaseManager<GameManager>
             case Enum_SceneState.Daughter_Room:
                 data.callBack += OnDaughter_RoomSceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
+                break;
+
+            case Enum_SceneState.DauterRoom:
+                data.callBack += OnDauterRoomSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
+                break;
+
+            case Enum_SceneState.PriestRoom:
+                data.callBack += OnPriestRoomSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("Priest_Room", data.callBack);
                 break;
 
             default:
