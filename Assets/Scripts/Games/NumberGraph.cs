@@ -63,6 +63,7 @@ public class NumberGraph : MonoBehaviour
             // 实现
             Debug.Log("Solved!");
             isSolved = false;
+            onFinish?.Invoke();
         }
     }
 
