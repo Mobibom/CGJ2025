@@ -568,9 +568,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.1
+    width: 1.5270834
+    height: 0.3333333
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5572faea398443ff909aeec2a3e400f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomLight: {fileID: 0}
+  SceneLightMangager: {fileID: 612132947}
 --- !u!1001 &1020515461595358932
 PrefabInstance:
   m_ObjectHideFlags: 0
