@@ -30,6 +30,8 @@ namespace Games.HhuaRongPuzzle
         private GameObject[,] tiles; // 3x3拼图块物体
         private Vector2Int emptyPos; // 空格位置
 
+        private Material unlitmat;
+
         public void Start()
         {
             EventCenter.GetInstance().AddEventListener<Vector2>("初始化华容道", InitializeGame);
@@ -40,6 +42,8 @@ namespace Games.HhuaRongPuzzle
         {
             huarongPanel = new GameObject("HuaRongPanel");
             huarongPanel.transform.position = originPoint;
+            
+            
         
             /*
          * 1 2 3
@@ -61,6 +65,9 @@ namespace Games.HhuaRongPuzzle
                     tile.AddComponent<BoxCollider2D>();
 
                     SpriteRenderer sr = tile.AddComponent<SpriteRenderer>();
+                    unlitmat = new Material(Shader.Find("Sprites/Sprite-Unlit-Default"));
+                    if( unlitmat != null )
+                        sr.material = unlitmat;
                     if (number <= tileSprites.Length && tileSprites[number - 1] != null)
                     {
                         sr.sprite = tileSprites[number - 1];

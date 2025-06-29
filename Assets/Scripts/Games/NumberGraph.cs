@@ -14,6 +14,7 @@ public class NumberGraph : MonoBehaviour
     private int[][] rowConstraints;
     private bool isSolved;
     private Action onFinish;
+    private Material unlitmat;
 
     void Start()
     {
@@ -48,6 +49,10 @@ public class NumberGraph : MonoBehaviour
                 cell.transform.SetParent(transform);
                 cell.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
                 cell.GetComponent<SpriteRenderer>().color = Color.white;
+
+                unlitmat =  new Material(Shader.Find("Sprites/Sprite-Unlit-Default"));
+                if(unlitmat != null)
+                    cell.GetComponent<SpriteRenderer>().material = unlitmat;
                 cells[i, j] = cell;
             }
         }
