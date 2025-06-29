@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -14,6 +15,8 @@ public class CombinationLock : MonoBehaviour
     private ConbinationLockNumber number2nd;
     private ConbinationLockNumber number3rd;
     private ConbinationLockNumber number4th;
+    private Action onFinish;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +36,16 @@ public class CombinationLock : MonoBehaviour
            answer4th == number4th.number)
         {
             Debug.Log("Congratulations!");
+            onFinish?.Invoke();
+        }
+    }
+
+    public void SetFinishedCallback(Action callback)
+    {
+        // 设置完成回调
+        if (callback != null)
+        {
+            onFinish = callback;
         }
     }
 }

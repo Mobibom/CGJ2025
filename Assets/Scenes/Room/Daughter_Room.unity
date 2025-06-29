@@ -875,9 +875,24 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   onFinished:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1425420139}
+        m_TargetAssemblyTypeName: Daughter_Room, Assembly-CSharp
+        m_MethodName: OnDiraySubtitleFinished
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   dialogues0: []
-  dialogues1: []
+  dialogues1:
+  - name: 
+    avatar: {fileID: 0}
+    content: "\u8FD9\u662F\u4E00\u672C\u65E5\u8BB0\uFF0C\u4F46\u662F\u88AB\u9501\u4E0A\u4E86"
   dialogues2: []
   dialogues3: []
   dialogues4: []

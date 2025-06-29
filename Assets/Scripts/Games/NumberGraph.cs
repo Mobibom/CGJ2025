@@ -13,6 +13,7 @@ public class NumberGraph : MonoBehaviour
     private int[][] columnConstraints;
     private int[][] rowConstraints;
     private bool isSolved;
+    private Action onFinish;
 
     void Start()
     {
@@ -74,6 +75,15 @@ public class NumberGraph : MonoBehaviour
                 matrix[i, j] = 0;
                 cells[i, j].GetComponent<SpriteRenderer>().color = Color.white;
             }
+        }
+    }
+
+    public void SetFinishedCallback(Action callback)
+    {
+        // 设置完成回调
+        if (callback != null)
+        {
+            onFinish = callback;
         }
     }
 
