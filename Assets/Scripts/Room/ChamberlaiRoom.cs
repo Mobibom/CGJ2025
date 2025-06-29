@@ -27,78 +27,51 @@ public class ChamberlaiRoom : MonoBehaviour
     public void OnBoxSubtitleFinished()
     {
         Debug.Log("box字幕已结束");
-        var instance = ResMgr.GetInstance().Load<GameObject>("Prefab/Games/CombinationLock");
+        var instance = ResMgr.GetInstance().Load<GameObject>("Prefab/Games/NumberGraph");
 
-        var combinationLockGame = instance.GetComponentInChildren<CombinationLock>(true);
+        var combinationLockGame = instance.GetComponentInChildren<NumberGraph>(true);
         if (combinationLockGame == null)
         {
-            Debug.LogWarning("未在实例下找到 CombinationLock 组件");
+            Debug.LogWarning("未在实例下找到 NumberGraph 组件");
             return;
         }
 
         combinationLockGame.SetFinishedCallback(() =>
         {
-            Debug.Log("组合锁游戏完成，触发下一步剧情");
-            SubtitleMgr.GetInstance().ShowSubtitle(SubtitleType.Bubble, null,
-                new List<DialogueEntry>
-                {
-                    new()
-                    {
-                        content = "镜子说我们是倒影。",
-                        avatar = null
-                    },
-                    new()
-                    {
-                        content = "她咳血那夜，我吞下她的名字。",
-                        avatar = null
-                    },
-                    new()
-                    {
-                        content = "现在我的眼睛成了她的墓穴——闭上时能听见双重心跳。",
-                        avatar = null
-                    },
-                    new()
-                    {
-                        content = "是谁在门缝藏了黑猫的牙齿……",
-                        avatar = null
-                    },
-                }, transform, Vector2.zero, () =>
-                {
-                    Debug.Log("剧情结束回调");
-                    GameFinished();
-                });
+            Debug.Log("数字图游戏完成，触发下一步剧情");
+            GameFinished();
             Destroy(instance);
         });
     }
 
     private void GameFinished()
     {
-        // 查找“女儿”对象
-        var priestObj = GameObject.Find("Layer(daughter)");
+        // 查找“背景”对象
+        var priestObj = GameObject.Find("Layer(background)");
         if (priestObj != null)
         {
             var sr = priestObj.GetComponent<SpriteRenderer>();
             if (sr != null)
             {
-                // TODO: 切换到死亡状态女儿图片
-                var newSprite = Resources.Load<Sprite>("Textures/Room/PriestRoom/4-3(死亡状态牧师)");
+                // TODO: 切换图片
+                var newSprite = Resources.Load<Sprite>("Textures/Room/PriestRoom/guanjia2");
                 if (newSprite != null)
                 {
                     sr.sprite = newSprite;
                 }
                 else
                 {
-                    Debug.LogWarning("未能加载死亡状态女儿图片");
+                    Debug.LogWarning("未能加载图片");
                 }
             }
             else
             {
-                Debug.LogWarning("Layer(Daughter)没有SpriteRenderer组件");
+                Debug.LogWarning("Layer(background)没有SpriteRenderer组件");
             }
         }
         else
         {
-            Debug.LogWarning("未找到Layer(Daughter)对象");
+            Debug.LogWarning("未找到Layer(background)对象");
         }
         
         slc.LerpBToC(1.5f);
