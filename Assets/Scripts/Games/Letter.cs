@@ -7,6 +7,11 @@ public class letter : MonoBehaviour
     // Start is called before the first frame update
 
     private JigsawFragment chosenFrag;
+
+    public float leftBorder;
+    public float rightBorder;
+    public float topBorder;
+    public float bottomBorder;
     void Start()
     {
         EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
@@ -57,21 +62,21 @@ public class letter : MonoBehaviour
         {
             Vector3 movePos = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y,
                     Camera.main.nearClipPlane + 0.1f));
-            if (movePos.x > 3)
+            if (movePos.x > rightBorder)
             {
-                movePos.x = 3;
+                movePos.x = rightBorder;
             }
-            if (movePos.x < -3)
+            if (movePos.x < leftBorder)
             {
-                movePos.x = -3;
+                movePos.x = leftBorder;
             }
-            if (movePos.y > 3)
+            if (movePos.y > bottomBorder)
             {
-                movePos.y = 3;
+                movePos.y = bottomBorder;
             }
-            if (movePos.y < -3)
+            if (movePos.y < topBorder)
             {
-                movePos.y = -3;
+                movePos.y = topBorder;
             }
             chosenFrag.transform.position = movePos;
         }
