@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalScene: {fileID: 230212789}
+  SceneLightMangager: {fileID: 3519734715084617027}
+  duration: 5
   deadScene: {fileID: 759590643}
 --- !u!4 &45218339
 Transform:
@@ -851,6 +853,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25ae4634422c3da499e07fc5f1cddc9e, type: 3}
+--- !u!1 &3519734715084617027 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 310408309242375945, guid: 25ae4634422c3da499e07fc5f1cddc9e, type: 3}
+  m_PrefabInstance: {fileID: 3519734715084617026}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

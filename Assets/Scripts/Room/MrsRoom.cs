@@ -6,6 +6,10 @@ public class MrsRoom : MonoBehaviour
 {
     [SerializeField]
     private GameObject normalScene;
+    
+    public GameObject SceneLightMangager;
+    private SceneLightController slc;
+    public float duration = 5.0f;
 
     [SerializeField]
     private GameObject deadScene;
@@ -14,6 +18,10 @@ public class MrsRoom : MonoBehaviour
     void Start()
     {
         EventCenter.GetInstance().AddEventListener("消消乐游戏通过", OnMatchThreeGameFinished);
+        slc = SceneLightMangager.GetComponent<SceneLightController>();
+        slc.LerpAToB(duration);
+        
+        
     }
 
     private void OnDestroy()
@@ -27,5 +35,6 @@ public class MrsRoom : MonoBehaviour
         // 切换到死亡状态？
         normalScene.SetActive(false);
         deadScene.SetActive(true);
+        slc.LerpBToC(duration);
     }
 }
