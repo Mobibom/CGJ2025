@@ -10,11 +10,13 @@ public class Daughter_Room : MonoBehaviour
     public Camera MainCamera; // 确保在 Inspector 中赋值
 
     private SceneLightController slc;
+
+    public float duration = 5.0f;
     // Start is called before the first frame update
     void Start()
     {
         slc = SceneLightMangager.GetComponent<SceneLightController>();
-        slc.LerpAToB(1.5f); 
+        slc.LerpAToB(duration); 
     }
     // Update is called once per frame
     void Update()
@@ -102,7 +104,7 @@ public class Daughter_Room : MonoBehaviour
             Debug.LogWarning("未找到Layer(background)对象");
         }
         
-        slc.LerpBToC(1.5f); 
+        slc.LerpBToC(duration); 
     }
     
     

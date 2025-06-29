@@ -10,10 +10,12 @@ public class PriestRoom : MonoBehaviour
     public GameObject SceneLightMangager; // 确保在 Inspector 中赋值
 
     private SceneLightController slc;
+    
+    public float duration = 5.0f;
     void Start()
     {
         slc = SceneLightMangager.GetComponent<SceneLightController>();
-        slc.LerpAToB(1.5f); 
+        slc.LerpAToB(duration); 
     }
 
     // Update is called once per frame
@@ -51,7 +53,7 @@ public class PriestRoom : MonoBehaviour
         }
         
         
-        slc.LerpBToC(1.5f);
+        slc.LerpBToC(duration);
     }
 
     public void OnCrucifixSubtitleFinished()

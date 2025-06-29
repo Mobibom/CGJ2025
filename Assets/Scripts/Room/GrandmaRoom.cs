@@ -10,11 +10,13 @@ public class GrandmaRoom : MonoBehaviour
 
     private SceneLightController slc;
     
+    public float duration = 5.0f;
+    
     
     void Start()
     {
         slc = SceneLightMangager.GetComponent<SceneLightController>();
-        slc.LerpAToB(1.5f); 
+        slc.LerpAToB(duration); 
     }
     
     // 小游戏成功后调用slc.LerpBToc(1.5f);

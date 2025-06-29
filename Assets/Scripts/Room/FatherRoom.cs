@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class FatherRoom : MonoBehaviour
 {
+    
+    public GameObject SceneLightMangager; // 确保在 Inspector 中赋值
+    public Camera MainCamera; // 确保在 Inspector 中赋值
+
+    private SceneLightController slc;
+    
+    public float duration = 5.0f;
+    // Start is called before the first frame update
+    void Start()
+    {
+        slc = SceneLightMangager.GetComponent<SceneLightController>();
+        slc.LerpAToB(duration); 
+    }
+    
+    
+    
     public void OnPaintingConversationFinished()
     {
         Debug.Log("已点击画作");
