@@ -11,6 +11,11 @@ public enum Enum_SceneState
     DemoRoom,
     Room1,
     Room2,
+    Priest_Room,
+    Mrs_Room,
+    Grandma_Room,
+    Father_Room,
+    Daughter_Room,
 
     Game1,
 
@@ -149,6 +154,36 @@ public class GameManager : BaseManager<GameManager>
         Debug.Log("Test 场景加载完成");
         SceneState = Enum_SceneState.Test;
     }
+    
+    private void OnPriest_RoomSceneLoaded()
+    {
+        Debug.Log("Priest_Room 场景加载完成");
+        SceneState = Enum_SceneState.Priest_Room;
+    }
+    
+    private void OnMrs_RoomSceneLoaded()
+    {
+        Debug.Log("Mrs_Room 场景加载完成");
+        SceneState = Enum_SceneState.Mrs_Room;
+    }
+    
+    private void OnGrandma_RoomSceneLoaded()
+    {
+        Debug.Log("Grandma_Room 场景加载完成");
+        SceneState = Enum_SceneState.Grandma_Room;
+    }
+    
+    private void OnFather_RoomSceneLoaded()
+    {
+        Debug.Log("Father_Room 场景加载完成");
+        SceneState = Enum_SceneState.Father_Room;
+    }
+    
+    private void OnDaughter_RoomSceneLoaded()
+    {
+        Debug.Log("Daughter_Room 场景加载完成");
+        SceneState = Enum_SceneState.Daughter_Room;
+    }
 
     private void OnSceneStateChanged(SceneStateData data)
     {
@@ -197,6 +232,31 @@ public class GameManager : BaseManager<GameManager>
             case Enum_SceneState.Test:
                 data.callBack += OnTestSceneLoaded;
                 // TODO: 修改为测试场景的名称
+                ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
+                break;
+            
+            case Enum_SceneState.Priest_Room:
+                data.callBack += OnPriest_RoomSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("Priest_Room", data.callBack);
+                break;
+            
+            case Enum_SceneState.Mrs_Room:
+                data.callBack += OnMrs_RoomSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("Mrs_Room", data.callBack);
+                break;
+            
+            case Enum_SceneState.Grandma_Room:
+                data.callBack += OnGrandma_RoomSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("Grandma_Room", data.callBack);
+                break;
+            
+            case Enum_SceneState.Father_Room:
+                data.callBack += OnFather_RoomSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("Father_Room", data.callBack);
+                break;
+            
+            case Enum_SceneState.Daughter_Room:
+                data.callBack += OnDaughter_RoomSceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
                 break;
 
