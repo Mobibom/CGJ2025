@@ -9,5 +9,6 @@ public class GameLoop : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         GameManager.GetInstance().Init();
+        MusicMgr.GetInstance().PlayBkMusic("bgm");
     }
 }

@@ -76,6 +76,11 @@ public class GameManager : BaseManager<GameManager>
                 MainMenuSceneUpdate();
                 break;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            MusicMgr.GetInstance().PlaySound("mouse_click", false);
+        }
     }
 
     private void MainMenuSceneUpdate()

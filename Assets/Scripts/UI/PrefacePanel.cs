@@ -41,12 +41,7 @@ public class PrefacePanel : BasePanel
             {
                 sprite.gameObject.SetActive(false);
             }
-        });
-
-        sequence.AppendInterval(1.0f);
-
-        // 字幕播完以后
-        sequence.AppendCallback(() =>
+        }).AppendInterval(1.0f).Append(blackImage.DOFade(0.0f, 3.0f)).AppendCallback(() =>
         {
             // 触发进入房间选择场景的事件，GameManager 会监听这个事件，并加载场景
             EventCenter.GetInstance().EventTrigger<SceneStateData>("场景切换", new SceneStateData(Enum_SceneState.RoomSelection));
