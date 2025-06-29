@@ -458,20 +458,20 @@ MonoBehaviour:
     intensity: 1.31
     fallOff: 0.53
     fallOffStrength: 0.2
-  - color: {r: 0.8584906, g: 0.78569615, b: 0.22272164, a: 1}
-    intensity: 1.64
-    fallOff: 0.6
+  - color: {r: 0, g: 0.8490566, b: 0.057021335, a: 1}
+    intensity: 2.29
+    fallOff: 3.45
     fallOffStrength: 0.713
-  - color: {r: 0.40850836, g: 0.47250468, b: 0.6415094, a: 1}
+  - color: {r: 0.8490566, g: 0.19624422, b: 0.6930187, a: 1}
     intensity: 2.35
     fallOff: 0.2
     fallOffStrength: 0.504
   - color: {r: 0.060731, g: 0.032929864, b: 0.18867922, a: 1}
-    intensity: 2.04
+    intensity: 3.62
     fallOff: 0.5
     fallOffStrength: 0.5
   - color: {r: 0, g: 0.8584906, b: 0.10001898, a: 1}
-    intensity: 9.82
+    intensity: 34.92
     fallOff: 0.5
     fallOffStrength: 0.6
   - color: {r: 0.07032762, g: 0.9811321, b: 0, a: 1}
@@ -506,7 +506,7 @@ Transform:
   m_GameObject: {fileID: 6090844995549047006}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.72, y: 0.077, z: 0.018024638}
+  m_LocalPosition: {x: 1.805, y: 0.18, z: 0.018024638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -628,8 +628,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 1
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.02425, y: -0.16864999, z: 0}
-    m_Extent: {x: 0.73175, y: 0.50975, z: 0}
+    m_Center: {x: -0.11375001, y: -0.037149996, z: 0}
+    m_Extent: {x: 0.82124996, y: 0.64125, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -644,9 +644,9 @@ MonoBehaviour:
   - {x: 0.21619008, y: -0.46520472, z: 0.00000004563863}
   - {x: 0.5089894, y: -0.34445515, z: 1.9674107e-10}
   - {x: -0.092164904, y: 0.021799136, z: 1.9674107e-10}
-  - {x: -0.26682788, y: 0.13412684, z: 1.9674107e-10}
-  - {x: -0.45626748, y: 0.14097124, z: 1.9674107e-10}
-  - {x: -0.5571336, y: 0.031152064, z: 1.9674107e-10}
+  - {x: -0.26682785, y: 0.14351651, z: 1.9674107e-10}
+  - {x: -0.64406, y: 0.4038808, z: 1.9674107e-10}
+  - {x: -0.73553646, y: 0.19077575, z: 1.9674107e-10}
 --- !u!1 &7929721150061623563
 GameObject:
   m_ObjectHideFlags: 0
