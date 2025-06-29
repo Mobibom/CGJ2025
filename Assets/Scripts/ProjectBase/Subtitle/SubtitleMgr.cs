@@ -47,7 +47,8 @@ namespace ProjectBase.Subtitle
         public void ShowSubtitle(SubtitleType type, Sprite bgSprite,
             List<DialogueEntry> entries,
             Transform followTarget,
-            Vector2 offset)
+            Vector2 offset,
+            Action onFinish = null)
         {
             if (currentSubtitlePrefab)
             {
@@ -65,6 +66,7 @@ namespace ProjectBase.Subtitle
                     {
                         Object.Destroy(currentSubtitlePrefab);
                         currentSubtitlePrefab = null;
+                        onFinish?.Invoke();
                     });
                     break;
                 }
@@ -75,6 +77,7 @@ namespace ProjectBase.Subtitle
                     {
                         Object.Destroy(currentSubtitlePrefab);
                         currentSubtitlePrefab = null;
+                        onFinish?.Invoke();
                     });
                     break;
                 }

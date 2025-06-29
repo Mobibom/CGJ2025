@@ -9,6 +9,7 @@ public class ClickableObject : MonoBehaviour
     [SerializeField] private SubtitleType type;
     [SerializeField] private Sprite backgroundSprite;
     [SerializeField] private Vector2 offset;
+    [SerializeField] private UnityEngine.Events.UnityEvent onFinished;
     [SerializeField] private List<DialogueEntry> dialogues0;
     [SerializeField] private List<DialogueEntry> dialogues1;
     [SerializeField] private List<DialogueEntry> dialogues2;
@@ -33,7 +34,7 @@ public class ClickableObject : MonoBehaviour
             int idx = UnityEngine.Random.Range(0, entries.Count);
             var selectedEntry = entries[idx];
             SubtitleMgr.GetInstance().ShowSubtitle(this.type, this.backgroundSprite, selectedEntry
-                , this.gameObject.transform, this.offset);
+                , this.gameObject.transform, this.offset, onFinished.Invoke);
         }
         else
         {

@@ -176,7 +176,7 @@ public class GameManager : BaseManager<GameManager>
 
             case Enum_SceneState.Game1:
                 data.callBack += OnGame1SceneLoaded;
-                ScenesMgr.GetInstance().LoadScene("FillColorGameScene", data.callBack);
+                ScenesMgr.GetInstance().LoadScene("Priest_Room", data.callBack);
                 break;
 
             case Enum_SceneState.HuaRongPuzzleGame:

@@ -52,7 +52,7 @@ namespace Games
         void Start()
         {
             EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
-            EventCenter.GetInstance().AddEventListener<Vector3>("鼠标移动", OnMouseMove);
+            // EventCenter.GetInstance().AddEventListener<Vector3>("鼠标移动", OnMouseMove);
             ResetGame();
         }
 
@@ -532,7 +532,7 @@ namespace Games
                 {
                     lastDirectionRenderer.Add(rr);
                     rr.sprite = availableSprite;
-                    rr.color = new Color(availableSpriteColor.r, availableSpriteColor.g, availableSpriteColor.b, 0f);
+                    // rr.color = new Color(availableSpriteColor.r, availableSpriteColor.g, availableSpriteColor.b, 0f);
                     rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
                     rr.DOColor(availableSpriteColor, 0.6f).SetDelay(animationDuration * delayIndex);
                 }
