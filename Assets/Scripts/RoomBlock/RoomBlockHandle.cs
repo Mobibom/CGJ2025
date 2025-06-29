@@ -8,7 +8,10 @@ public class RoomBlockHandle : MonoBehaviour
     [SerializeField]
     public Enum_SceneState m_SwitchToScene;
 
-    [Header("窗户")] public GameObject windowLight;
+    [Header("窗户")] 
+    
+    public GameObject windowLight;
+    public GameObject windowDark;
 
     
     [Header("高亮渐变时间（秒）")]
@@ -68,6 +71,7 @@ public class RoomBlockHandle : MonoBehaviour
         // }
         
         windowLight.SetActive(false);
+        windowDark.SetActive(true);
     }
 
     private void OnMouseEnter()
@@ -76,6 +80,7 @@ public class RoomBlockHandle : MonoBehaviour
         // hightLightStrength = 0.15f;
         // _targetValue = hightLightStrength;
         windowLight.SetActive(true);
+        windowDark.SetActive(false);
     }
 
     // private void OnMouseDown()
@@ -88,6 +93,7 @@ public class RoomBlockHandle : MonoBehaviour
         m_IsMouseEntered = false;
         // _targetValue = 0f;
         windowLight.SetActive(false);
+        windowDark.SetActive(true);
     }
 
     private void Update()
