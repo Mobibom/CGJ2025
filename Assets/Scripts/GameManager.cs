@@ -249,7 +249,7 @@ public class GameManager : BaseManager<GameManager>
 
             case Enum_SceneState.Test:
                 data.callBack += OnTestSceneLoaded;
-                ScenesMgr.GetInstance().LoadScene("Chamberlai_Room", data.callBack);
+                ScenesMgr.GetInstance().LoadScene("Grandma_Room", data.callBack);
                 break;
             
             case Enum_SceneState.Priest_Room:

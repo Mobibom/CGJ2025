@@ -104,9 +104,7 @@ public class Daughter_Room : MonoBehaviour
         {
             Debug.LogWarning("未找到Layer(background)对象");
         }
-        
+
         slc.LerpBToC(duration); 
     }
-    
-    
 }

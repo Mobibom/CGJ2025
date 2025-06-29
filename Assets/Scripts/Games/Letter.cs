@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class letter : MonoBehaviour
+public class Letter : MonoBehaviour
 {
     // Start is called before the first frame update
 
@@ -12,6 +13,7 @@ public class letter : MonoBehaviour
     public float rightBorder;
     public float topBorder;
     public float bottomBorder;
+    public Action onFinish;
     void Start()
     {
         EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
@@ -20,7 +22,7 @@ public class letter : MonoBehaviour
 
         foreach (Transform child in transform)
         {
-            child.transform.position = new Vector3(Random.Range(-3, 3), Random.Range(-3, 3), child.transform.position.z);
+            child.transform.position = new Vector3(UnityEngine.Random.Range(-3, 3), UnityEngine.Random.Range(-3, 3), child.transform.position.z);
         }
     }
 
@@ -28,6 +30,15 @@ public class letter : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void SetFinishedCallback(Action callback)
+    {
+        // 设置完成回调
+        if (callback != null)
+        {
+            onFinish = callback;
+        }
     }
 
     void OnKeyDown(KeyCode key)
@@ -53,6 +64,7 @@ public class letter : MonoBehaviour
         {
             chosenFrag.CheckMatch();
             chosenFrag = null;
+            isFinished();
         }
     }
 
@@ -80,5 +92,17 @@ public class letter : MonoBehaviour
             }
             chosenFrag.transform.position = movePos;
         }
+    }
+
+    public void isFinished()
+    {
+        foreach (Transform child in transform)
+        {
+            if (!child.GetComponent<JigsawFragment>().getMatchStatus())
+            {
+                return;
+            }
+        }
+        onFinish?.Invoke();
     }
 }
