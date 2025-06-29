@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Games;
 using ProjectBase.Subtitle;
+// using UnityEngine.Events; // PriestRoom 不需要直接使用 UnityEvent，除非它也有自己的事件
 
 public class PriestRoom : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject SceneLightMangager; // 确保在 Inspector 中赋值
+
+    private SceneLightController slc;
     void Start()
     {
+        slc = SceneLightMangager.GetComponent<SceneLightController>();
+        slc.LerpAToB(1.5f); 
     }
 
     // Update is called once per frame
@@ -44,6 +49,9 @@ public class PriestRoom : MonoBehaviour
         {
             Debug.LogWarning("未找到图层3.5（牧师）对象");
         }
+        
+        
+        slc.LerpBToC(1.5f);
     }
 
     public void OnCrucifixSubtitleFinished()
