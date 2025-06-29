@@ -236,8 +236,7 @@ public class GameManager : BaseManager<GameManager>
 
             case Enum_SceneState.Test:
                 data.callBack += OnTestSceneLoaded;
-                // TODO: 修改为测试场景的名称
-                ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
+                ScenesMgr.GetInstance().LoadScene("CombinationLock", data.callBack);
                 break;
             
             case Enum_SceneState.Priest_Room:

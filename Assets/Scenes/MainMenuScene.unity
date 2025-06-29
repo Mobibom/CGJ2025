@@ -336,7 +336,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: House_MainMenu
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2321995830994441449, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+    - {fileID: 6079472022358564754, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+    - {fileID: 2093909959762194492, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+    - {fileID: 4076697424999503052, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+    - {fileID: 7124339398767134787, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+    - {fileID: 2668634910205236637, guid: a000f54e3ea56b446824726404ab3579, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
