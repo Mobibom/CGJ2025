@@ -194,8 +194,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -12.973999}
+  m_SizeDelta: {x: 0, y: 85.948}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4500835302773802819
 CanvasRenderer:
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
-  m_VerticalFit: 2
+  m_VerticalFit: 0
 --- !u!114 &5277010516904796905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +384,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This is a dialogue.
+  m_text: "This is \na \ndia\nlogue."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6e980c8624dc2b4db7f28f3d1509dee, type: 2}
   m_sharedMaterial: {fileID: -7358648039086580128, guid: a6e980c8624dc2b4db7f28f3d1509dee, type: 2}
