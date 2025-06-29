@@ -16,6 +16,36 @@ public class PriestRoom : MonoBehaviour
     {
     }
 
+    private void GameFinished()
+    {
+        // 查找“图层3.5（牧师）”对象
+        var priestObj = GameObject.Find("图层3.5（牧师）");
+        if (priestObj != null)
+        {
+            var sr = priestObj.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                var newSprite = Resources.Load<Sprite>("Textures/Room/PriestRoom/4-3(死亡状态牧师)");
+                if (newSprite != null)
+                {
+                    sr.sprite = newSprite;
+                }
+                else
+                {
+                    Debug.LogWarning("未能加载死亡状态牧师图片");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("图层3.5（牧师）没有SpriteRenderer组件");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("未找到图层3.5（牧师）对象");
+        }
+    }
+
     public void OnCrucifixSubtitleFinished()
     {
         Debug.Log("十字架字幕已结束");
@@ -45,11 +75,25 @@ public class PriestRoom : MonoBehaviour
                     }, transform, Vector2.zero, () =>
                     {
                         Debug.Log("剧情结束回调");
-                        // 这里可以添加剧情结束后的逻辑
+                        GameFinished();
                     });
             }
             else
             {
+                SubtitleMgr.GetInstance().ShowSubtitle(SubtitleType.Bubble, null,
+                    new List<DialogueEntry>
+                    {
+                        new()
+                        {
+                            name = "神父",
+                            content = "失败",
+                            avatar = null
+                        },
+                    }, transform, Vector2.zero, () =>
+                    {
+                        Debug.Log("剧情结束回调");
+                        // 这里可以添加剧情结束后的逻辑
+                    });
                 Debug.Log("填色游戏未完成，重新开始");
             }
 
