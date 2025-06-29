@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Room/Grandma_Room.unity
     guid: b1daec0d029a2ae47b5eb5839e8712c1
+  - enabled: 1
+    path: Assets/Scenes/Room/Mrs_Room.unity
+    guid: 5800ac382f4a58f4a960492f263f9238
   m_configObjects: {}

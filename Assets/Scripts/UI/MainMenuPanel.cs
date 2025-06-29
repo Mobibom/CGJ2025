@@ -119,6 +119,14 @@ public class MainMenuPanel : BasePanel
                 // TODO: 显示设置面板
                 break;
 
+            case "SkipButton":
+                // 直接到房间选择场景
+                UIManager.GetInstance().HideAllPanel(() =>
+                {
+                    EventCenter.GetInstance().EventTrigger<SceneStateData>("场景切换", new SceneStateData(Enum_SceneState.RoomSelection));
+                });
+                break;
+
             case "ExitGameButton":
                 Application.Quit();
                 break;
