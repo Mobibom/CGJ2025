@@ -387,7 +387,7 @@ MonoBehaviour:
   m_text: "This is \na \ndia\nlogue."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6e980c8624dc2b4db7f28f3d1509dee, type: 2}
-  m_sharedMaterial: {fileID: -7358648039086580128, guid: a6e980c8624dc2b4db7f28f3d1509dee, type: 2}
+  m_sharedMaterial: {fileID: 4400541619953586950, guid: a6e980c8624dc2b4db7f28f3d1509dee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

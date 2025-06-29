@@ -164,7 +164,10 @@ public class MatchThreeGamePanel : BasePanel
         if (eliminationCount == gridColors.GetLength(0) * gridColors.GetLength(1))
         {
             Debug.Log("游戏结束，所有格子已被消除！");
-            Initialize(); // 重新初始化游戏面板
+
+            // 隐藏当前面板，并发送游戏结束事件
+            UIManager.GetInstance().HidePanel("Games/MatchThreeGamePanel");
+            EventCenter.GetInstance().EventTrigger("消消乐游戏通过");
         }
     }
 

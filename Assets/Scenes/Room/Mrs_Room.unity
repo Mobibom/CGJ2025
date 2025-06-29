@@ -205,6 +205,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 980091483}
+  - {fileID: 231493094}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &231493092
@@ -217,6 +218,8 @@ GameObject:
   m_Component:
   - component: {fileID: 231493094}
   - component: {fileID: 231493093}
+  - component: {fileID: 231493096}
+  - component: {fileID: 231493095}
   m_Layer: 0
   m_Name: Mrs
   m_TagString: Untagged
@@ -284,13 +287,87 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231493092}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.211, y: -0.428, z: -0.2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.211, y: -0.328, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 230212791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &231493095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231493092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71904c20306504948866550c04dc0ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  backgroundSprite: {fileID: 21300000, guid: 1fa910668eb22b64d87cbef3ebf8a2b9, type: 3}
+  offset: {x: 0, y: 0}
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  dialogues0:
+  - name: 
+    avatar: {fileID: 0}
+    content: "\u4F60\u2026\u2026\u4F60\u770B\u5230\u4E86\u4EC0\u4E48\uFF1F\u4E0D\u8981\u770B\uFF01\u4E0D\u8981\u770B\uFF01"
+  - name: 
+    avatar: {fileID: 0}
+    content: "\u6211\u7684\u5973\u513F\u2026\u2026\u6211\u7684\u5973\u513F\u2026\u2026\u5979\u88AB\u2018\u9057\u5FD8\u2019\u4E86\uFF0C\u5C31\u50CF\u90A3\u4E9B\u2018\u58F0\u97F3\u2019\u88AB\u2018\u538B\u6291\u2019\u4E86\u4E00\u6837\u3002\u53EA\u6709\u2018\u503E\u542C\u2019\uFF0C\u624D\u80FD\u627E\u56DE\u2018\u7F3A\u5931\u2019\u7684\u7247\u6BB5\u3002"
+  dialogues1: []
+  dialogues2: []
+  dialogues3: []
+  dialogues4: []
+--- !u!61 &231493096
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231493092}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.53, y: 1.08}
+    newSize: {x: 0.53, y: 1.08}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.53, y: 1.08}
+  m_EdgeRadius: 0
 --- !u!1 &980091482
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +433,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0077344775, y: 0.110219}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -367,7 +444,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1.015469, y: 1.1221149}
   m_EdgeRadius: 0
 --- !u!114 &980091486
 MonoBehaviour:
@@ -437,9 +514,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.1
-    width: 1.5270834
-    height: 0.3333333
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -607,4 +684,3 @@ SceneRoots:
   - {fileID: 2120548773}
   - {fileID: 230212791}
   - {fileID: 3519734715084617026}
-  - {fileID: 231493094}
