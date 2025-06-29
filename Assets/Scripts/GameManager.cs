@@ -16,6 +16,7 @@ public enum Enum_SceneState
     Grandma_Room,
     Father_Room,
     Daughter_Room,
+    Chamberlai_Room,
 
     Game1,
 
@@ -155,6 +156,13 @@ public class GameManager : BaseManager<GameManager>
         SceneState = Enum_SceneState.Test;
     }
     
+    
+    private void OnChamberlai_RoomSceneLoaded()
+    {
+        Debug.Log("Chamberlai_Room 场景加载完成");
+        SceneState = Enum_SceneState.Chamberlai_Room;
+    }
+    
     private void OnPriest_RoomSceneLoaded()
     {
         Debug.Log("Priest_Room 场景加载完成");
@@ -263,7 +271,12 @@ public class GameManager : BaseManager<GameManager>
                 data.callBack += OnDaughter_RoomSceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
                 break;
-
+            
+            case Enum_SceneState.Chamberlai_Room:
+                data.callBack += OnChamberlai_RoomSceneLoaded;
+                ScenesMgr.GetInstance().LoadScene("Chamberlai_Room", data.callBack);
+                break;
+            
             default:
                 Debug.LogError("SceneState Error");
                 break;
