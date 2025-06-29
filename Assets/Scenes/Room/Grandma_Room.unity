@@ -722,6 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df233966d91e6e40aa896e70dc55a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneLightMangager: {fileID: 7416475884352801760}
 --- !u!1001 &7416475884352801759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -779,6 +780,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d37b2a2fbc0c0534281d247976d1a959, type: 3}
+--- !u!1 &7416475884352801760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7650385427703028373, guid: d37b2a2fbc0c0534281d247976d1a959, type: 3}
+  m_PrefabInstance: {fileID: 7416475884352801759}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
