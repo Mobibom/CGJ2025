@@ -65,6 +65,10 @@ namespace Games
             // 初始化游戏网格
             cells = new Cell[gridSize, gridSize];
 
+            // 计算中心偏移量（以父物体transform.position为中心）
+            Vector3 center = transform.position;
+            float offset = (gridSize - 1) * cellSize / 2f;
+
             // 创建网格单元格对象
             for (var x = 0; x < gridSize; x++)
             {
@@ -77,17 +81,28 @@ namespace Games
                         transform =
                         {
                             parent = transform,
-                            position = new Vector3(x * cellSize, y * cellSize, 0),
-                            localScale = new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f)
+                            position = center + new Vector3(x * cellSize - offset, y * cellSize - offset, 0.1f),
+                            localScale = new Vector3(cellSize, cellSize, 1) // 设置单元格大小
                         }
                     };
                     var spr = obj.AddComponent<SpriteRenderer>();
                     spr.sprite = emptySprite;
+                    // 设置SpriteRenderer的锚点到中心（Unity默认锚点就是中心，无需额外设置）
+                    // 如果有RectTransform（用于UI），则设置anchor和pivot为中心
+                    var rectTransform = obj.GetComponent<RectTransform>();
+                    if (rectTransform != null)
+                    {
+                        rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+                        rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                        rectTransform.pivot = new Vector2(0.5f, 0.5f);
+                    }
 
                     // 添加碰撞体用于鼠标检测
                     if (obj.GetComponent<BoxCollider>() == null)
                     {
-                        obj.AddComponent<BoxCollider>().size = new Vector3(1, 1, 0.1f);
+                        var collider = obj.AddComponent<BoxCollider>();
+                        collider.size = new Vector3(1, 1, 0.1f);
+                        collider.center = Vector3.zero; // 保证碰撞体居中
                     }
 
                     // 设置材质
@@ -208,15 +223,14 @@ namespace Games
                     if (!isGameStarted)
                     {
                         // 开始游戏 - 选择起始位置
-                        // 这里需要实现获取鼠标点击的格子位置逻辑
-                        // 简化实现：假设点击位置转换为网格坐标
-                        // 获取鼠标点击位置并转换为世界坐标
                         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                         if (Physics.Raycast(ray, out var hit))
                         {
-                            // 假设网格中心在原点，每个格子大小为1单位
-                            var x = Mathf.RoundToInt(hit.point.x /*+ gridSize / 2f*/);
-                            var y = Mathf.RoundToInt(hit.point.y /*+ gridSize / 2f*/);
+                            // 修正：根据父物体transform和offset计算格子坐标
+                            float offset = (gridSize - 1) * cellSize / 2f;
+                            Vector3 localPos = hit.point - transform.position;
+                            int x = Mathf.RoundToInt((localPos.x + offset) / cellSize);
+                            int y = Mathf.RoundToInt((localPos.y + offset) / cellSize);
                             if (IsWithinBounds(x, y))
                             {
                                 StartGameAt(x, y);
@@ -317,9 +331,11 @@ namespace Games
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out var hit)) return;
 
-            // 计算点击位置相对当前位置的方向
-            var x = Mathf.RoundToInt(hit.point.x);
-            var y = Mathf.RoundToInt(hit.point.y);
+            // 修正：根据父物体transform和offset计算格子坐标
+            float offset = (gridSize - 1) * cellSize / 2f;
+            Vector3 localPos = hit.point - transform.position;
+            int x = Mathf.RoundToInt((localPos.x + offset) / cellSize);
+            int y = Mathf.RoundToInt((localPos.y + offset) / cellSize);
             var direction = new Vector2Int(x - currentPosition.x, y - currentPosition.y);
 
             Debug.Log($"选择方向: {direction} {x} {y} {hit.point}");
