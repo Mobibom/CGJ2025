@@ -71,6 +71,7 @@ public class Daughter_Room : MonoBehaviour
                     GameFinished();
                 });
             Destroy(instance);
+            Destroy(GameObject.Find("Layer(daughter)"));
         });
     }
 
