@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319a3b4c70ce2d9498f3df1b731e4993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   initialLight: 0
   lights:
   - {fileID: 7064105629613764945}
