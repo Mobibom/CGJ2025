@@ -28,13 +28,13 @@ public class MatchThreeMirror : MonoBehaviour
             Debug.LogError("Dot prefab not found!");
         }
 
-        EventCenter.GetInstance().AddEventListener("消消乐游戏完成", OnGameFinished);
+        EventCenter.GetInstance().AddEventListener("消消乐游戏通过", OnGameFinished);
     }
 
     private void OnDestroy()
     {
         // 移除事件监听
-        EventCenter.GetInstance().RemoveEventListener("消消乐游戏完成", OnGameFinished);
+        EventCenter.GetInstance().RemoveEventListener("消消乐游戏通过", OnGameFinished);
     }
 
     private void OnGameFinished()
