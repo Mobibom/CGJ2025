@@ -29,6 +29,8 @@ namespace Games.HhuaRongPuzzle
         private GameObject huarongPanel;
         private GameObject[,] tiles; // 3x3拼图块物体
         private Vector2Int emptyPos; // 空格位置
+        
+        private bool isCreatedHuarongPuzzle = false;
 
         private Material unlitmat;
 
@@ -37,19 +39,20 @@ namespace Games.HhuaRongPuzzle
             EventCenter.GetInstance().AddEventListener<Vector2>("初始化华容道", InitializeGame);
             EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", HandleMouseClick);
             EventCenter.GetInstance().AddEventListener<Vector2>("重置华容道",ResetHuaRongPuzzle);
+            EventCenter.GetInstance().AddEventListener("华容道通关", DestroyHuarongPanel);
         }
         private void InitializeGame(Vector2 originPoint)
         {
+            isCreatedHuarongPuzzle = true;
+            
             huarongPanel = new GameObject("HuaRongPanel");
             huarongPanel.transform.position = originPoint;
-            
-            
         
             /*
-         * 1 2 3
-         * 4 5 6
-         * 7 8 []
-         */
+            * 1 2 3
+            * 4 5 6
+            * 7 8 []
+            */
             tiles = new GameObject[gridSize, gridSize];
             int number = 1;
             for (int y = gridSize - 1; y >= 0; y--)
@@ -85,7 +88,7 @@ namespace Games.HhuaRongPuzzle
 
             // 设置右下角为“空格”
             emptyPos = new Vector2Int(gridSize - 1, 0);
-        
+
             if (useCustomLayout)
             {
                 // 设置为演示时的华容道顺序
@@ -96,6 +99,11 @@ namespace Games.HhuaRongPuzzle
                 // 随机打乱顺序
                 ShuffleTiles();
             }
+        }
+
+        private void DestroyHuarongPanel()
+        {
+            Destroy(huarongPanel);
         }
     
         private void ShuffleTiles(int steps = 50)
@@ -179,6 +187,7 @@ namespace Games.HhuaRongPuzzle
         private void HandleMouseClick(KeyCode keyCode)
         {
             if (isAnimating) return;
+            if (!isCreatedHuarongPuzzle) return;
             if (keyCode == KeyCode.Mouse0)
             {
                 if (Camera.main != null)
