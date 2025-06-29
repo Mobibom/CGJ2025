@@ -41,6 +41,7 @@ public class FatherRoom : MonoBehaviour
 
     private void AfterShowPic()
     {
+        slc.LerpBToC(duration);
         GameObject bg = transform.Find("图层1(房间)")?.gameObject;
         if (bg != null) bg.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FatherRoom/父亲房间死");
     }
