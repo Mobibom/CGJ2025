@@ -670,9 +670,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.065395094
-    width: 1.0008937
-    height: 0.9809264
+    y: -0.026578072
+    width: 1.9140188
+    height: 1.1960132
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -950,7 +950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2ec04f24721485896dafa851dd2c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneLightMangager: {fileID: 4005965879313513104, guid: 6788e8d2e43283c4fb301691db50115a, type: 3}
+  SceneLightMangager: {fileID: 1825425075}
 --- !u!4 &1425420140
 Transform:
   m_ObjectHideFlags: 0
@@ -1040,6 +1040,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0ab48997cc0caa42965f95fd7a79290, type: 3}
+--- !u!1 &1825425075 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3145015276000433666, guid: a0ab48997cc0caa42965f95fd7a79290, type: 3}
+  m_PrefabInstance: {fileID: 1825425074}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
