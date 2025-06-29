@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Room/Priest_Room.unity
     guid: 80eac96291a1fff4babe67b34ed11bff
+  - enabled: 1
+    path: Assets/Scenes/Room/Daughter_Room.unity
+    guid: c0743b259229e40b5a5e02d0edb51fe0
   m_configObjects: {}
