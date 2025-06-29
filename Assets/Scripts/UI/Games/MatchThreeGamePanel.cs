@@ -14,6 +14,12 @@ public class MatchThreeGamePanel : BasePanel
         Transparent // 透明色，用于消除后的格子
     }
 
+    [SerializeField]
+    private GameObject blur;
+
+    [SerializeField]
+    private GameObject clear;
+
     /// <summary>
     /// 二维数组，存储每个格子的颜色
     /// </summary>
@@ -33,6 +39,9 @@ public class MatchThreeGamePanel : BasePanel
 
     private void Initialize()
     {
+        blur.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        clear.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
         eliminationCount = 0; // 重置消除计数
 
         // 定义一个 7x7 的格子颜色数组，目前是预设的颜色分布
@@ -165,9 +174,18 @@ public class MatchThreeGamePanel : BasePanel
         {
             Debug.Log("游戏结束，所有格子已被消除！");
 
-            // 隐藏当前面板，并发送游戏结束事件
-            UIManager.GetInstance().HidePanel("Games/MatchThreeGamePanel");
-            EventCenter.GetInstance().EventTrigger("消消乐游戏通过");
+            GetControl<Button>("Restart").gameObject.SetActive(false);
+
+            var sequence = DOTween.Sequence();
+            sequence.Append(blur.GetComponent<Image>().DOFade(0, 1f)) // 淡出模糊背景
+                    .Join(clear.GetComponent<Image>().DOFade(1, 1f)) // 淡入清除效果
+                    .AppendInterval(1f) // 等待 1 秒
+                    .Append(this.GetComponent<Image>().DOFade(0, 1f)) // 淡出当前面板
+                    .AppendCallback(() =>
+                    {   // 隐藏当前面板，并发送游戏结束事件
+                        UIManager.GetInstance().HidePanel("Games/MatchThreeGamePanel");
+                        EventCenter.GetInstance().EventTrigger("消消乐游戏通过");
+                    });
         }
     }
 

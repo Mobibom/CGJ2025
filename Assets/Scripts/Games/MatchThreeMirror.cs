@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MatchThreeMirror : MonoBehaviour
 {
+    private bool isGameFinished = false;
+
     void Start()
     {
         // 如果没有 EventSystem，则创建一个
@@ -25,11 +27,28 @@ public class MatchThreeMirror : MonoBehaviour
         {
             Debug.LogError("Dot prefab not found!");
         }
+
+        EventCenter.GetInstance().AddEventListener("消消乐游戏完成", OnGameFinished);
     }
 
-    private void OnMouseDown()
+    private void OnDestroy()
     {
-        Debug.Log("MatchThreeMirror clicked!");
+        // 移除事件监听
+        EventCenter.GetInstance().RemoveEventListener("消消乐游戏完成", OnGameFinished);
+    }
+
+    private void OnGameFinished()
+    {
+        isGameFinished = true;
+    }
+
+    public void ShowGame()
+    {
+        if (isGameFinished)
+        {
+            return;
+        }
+
         UIManager.GetInstance().ShowPanel<MatchThreeGamePanel>("Games/MatchThreeGamePanel", E_UI_Layer.Top);
     }
 }

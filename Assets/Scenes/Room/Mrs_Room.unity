@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 230212791}
   - component: {fileID: 230212790}
+  - component: {fileID: 230212792}
   m_Layer: 0
   m_Name: T_MrsRoon
   m_TagString: Untagged
@@ -208,6 +209,18 @@ Transform:
   - {fileID: 231493094}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &230212792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230212789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550ad20ba0d12af4299d2d00c1200a4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &231493092
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,6 +392,7 @@ GameObject:
   - component: {fileID: 980091483}
   - component: {fileID: 980091485}
   - component: {fileID: 980091486}
+  - component: {fileID: 980091487}
   m_Layer: 0
   m_Name: Mirror
   m_TagString: Untagged
@@ -458,6 +472,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ebe653c12cff8b4b99a4e89b825dc47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &980091487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980091482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71904c20306504948866550c04dc0ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  backgroundSprite: {fileID: 21300000, guid: 1fa910668eb22b64d87cbef3ebf8a2b9, type: 3}
+  offset: {x: 0, y: 0}
+  onFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 980091486}
+        m_TargetAssemblyTypeName: MatchThreeMirror, Assembly-CSharp
+        m_MethodName: ShowGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  dialogues0:
+  - name: 
+    avatar: {fileID: 0}
+    content: "\u4EB2\u7231\u7684\uFF0C\u5343\u4E07\u522B\u95EE\u6211\u4E16\u754C\u4E0A\u8C01\u6700\u7F8E\u8FD9\u79CD\u50BB\u95EE\u9898\u3002"
+  - name: 
+    avatar: {fileID: 0}
+    content: "\u4E5F\u522B\u95EE\u6211\u8C01\u6700\u574F"
+  dialogues1: []
+  dialogues2: []
+  dialogues3: []
+  dialogues4: []
 --- !u!1 &2120548770
 GameObject:
   m_ObjectHideFlags: 0
