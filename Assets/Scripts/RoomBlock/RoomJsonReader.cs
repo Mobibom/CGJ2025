@@ -22,8 +22,8 @@ public class RoomJsonReader : MonoBehaviour
     [Range(0.01f, 5f)]
     public float highlightTransitionTime = 0.3f;
     public float hightStrength = 0.15f;
-    
-    
+
+#if UNITY_EDITOR
 
     [ContextMenu("⚙️ 生成房间")]
     public void GenerateRooms()
@@ -132,5 +132,6 @@ public class RoomJsonReader : MonoBehaviour
             }
         }
     }
-    
+
+#endif
 }
