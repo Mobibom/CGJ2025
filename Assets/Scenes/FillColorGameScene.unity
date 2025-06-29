@@ -316,7 +316,7 @@ RectTransform:
   m_GameObject: {fileID: 1474559641}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2}
-  m_LocalScale: {x: 0.96, y: 0.94, z: 0.94}
+  m_LocalScale: {x: 3.08, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -345,13 +345,17 @@ MonoBehaviour:
   - {x: 3, y: 0}
   - {x: 4, y: 2}
   cellMaterial: {fileID: 0}
-  cellSize: 0.95
+  cellSize: 0.31
   emptySprite: {fileID: 21300000, guid: a5a88658805474efdb7a5ca15a43a88a, type: 3}
   fillSprite: {fileID: 21300000, guid: a5a88658805474efdb7a5ca15a43a88a, type: 3}
-  startSprite: {fileID: 21300000, guid: 9efc5ebf7dbface429d06b4cd347a964, type: 3}
-  currentSprite: {fileID: 21300000, guid: 8a9f18ca5cb80fb4788ccee5c200c098, type: 3}
-  availableSprite: {fileID: 21300000, guid: 299bd0287fe97bd4b9eb4f1872fe5b87, type: 3}
-  barrierSprite: {fileID: 21300000, guid: 7a2a437159d1c834595e83d594aa8f20, type: 3}
+  startSprite: {fileID: 21300000, guid: a5a88658805474efdb7a5ca15a43a88a, type: 3}
+  currentSprite: {fileID: 21300000, guid: a5a88658805474efdb7a5ca15a43a88a, type: 3}
+  availableSprite: {fileID: 21300000, guid: a5a88658805474efdb7a5ca15a43a88a, type: 3}
+  barrierSprite: {fileID: 21300000, guid: a5a88658805474efdb7a5ca15a43a88a, type: 3}
+  fillSpriteColor: {r: 0.26269504, g: 0.8490566, b: 0.18823424, a: 1}
+  availableSpriteColor: {r: 0.75417393, g: 0.7735849, b: 0.29556784, a: 1}
+  barrierSpriteColor: {r: 0.627451, g: 0.18823527, b: 0.2140135, a: 1}
+  defaultCellColor: {r: 1, g: 1, b: 1, a: 1}
   animationDuration: 0.1
 --- !u!1 &1991022826
 GameObject:

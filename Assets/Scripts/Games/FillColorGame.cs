@@ -13,6 +13,7 @@ namespace Games
         public bool isFilled;
         public bool isStart;
         public bool isCurrent;
+        public bool isBarrier; // 新增障碍标记
     }
 
     public class FillColorGame : MonoBehaviour
@@ -30,6 +31,10 @@ namespace Games
         [SerializeField] private Sprite currentSprite;
         [SerializeField] private Sprite availableSprite;
         [SerializeField] private Sprite barrierSprite;
+        [Header("颜色设置")] [SerializeField] private Color fillSpriteColor = Color.white;
+        [SerializeField] private Color availableSpriteColor = Color.white;
+        [SerializeField] private Color barrierSpriteColor = Color.white;
+        [SerializeField] private Color defaultCellColor = Color.white; // 新增默认颜色
         [SerializeField] private float animationDuration = 0.1f; // 动画持续时间
 
         private Cell[,] cells;
@@ -68,21 +73,24 @@ namespace Games
             // 计算中心偏移量（以父物体transform.position为中心）
             Vector3 center = transform.position;
             float offset = (gridSize - 1) * cellSize / 2f;
+            Vector3 parentScale = transform.lossyScale;
 
             // 创建网格单元格对象
             for (var x = 0; x < gridSize; x++)
             {
                 for (var y = 0; y < gridSize; y++)
                 {
-                    // 创建单元格游戏对象
+                    // 计算缩放后的位置
+                    Vector3 localPos = new Vector3(x * cellSize - offset, y * cellSize - offset, 0.1f);
+                    Vector3 scaledLocalPos = Vector3.Scale(localPos, parentScale);
                     var obj = new GameObject
                     {
                         name = $"Cell_{x}_{y}",
                         transform =
                         {
                             parent = transform,
-                            position = center + new Vector3(x * cellSize - offset, y * cellSize - offset, 0.1f),
-                            localScale = new Vector3(cellSize, cellSize, 1) // 设置单元格大小
+                            position = center + scaledLocalPos,
+                            localScale = Vector3.Scale(new Vector3(cellSize, cellSize, 1), parentScale)
                         }
                     };
                     var spr = obj.AddComponent<SpriteRenderer>();
@@ -112,6 +120,9 @@ namespace Games
                     //     r.material = cellMaterial;
                     // }
 
+                    // 缩放cell以适应父物体缩放
+                    obj.transform.localScale = Vector3.Scale(new Vector3(cellSize, cellSize, 1), parentScale);
+
                     cells[x, y].obj = obj;
                 }
             }
@@ -140,9 +151,15 @@ namespace Games
         {
             if (!IsWithinBounds(x, y)) return;
 
-            var rr = cells[x, y].obj.GetComponent<SpriteRenderer>();
-            cells[x, y].isFilled = true; // 设置为障碍
-            rr.sprite = barrierSprite; // 设置障碍颜色
+            var cell = cells[x, y];
+            var rr = cell.obj.GetComponent<SpriteRenderer>();
+            cell.isFilled = true; // 设置为障碍
+            cell.isBarrier = true; // 新增障碍标记
+            rr.sprite = barrierSprite; // 设置障碍图片
+            rr.color = new Color(barrierSpriteColor.r, barrierSpriteColor.g, barrierSpriteColor.b, 0f);
+            rr.DOFade(1.0f, 0.6f);
+            rr.DOColor(barrierSpriteColor, 0.6f);
+            cells[x, y] = cell;
         }
 
         private bool IsWithinBounds(int x, int y)
@@ -226,11 +243,17 @@ namespace Games
                         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                         if (Physics.Raycast(ray, out var hit))
                         {
-                            // 修正：根据父物体transform和offset计算格子坐标
                             float offset = (gridSize - 1) * cellSize / 2f;
+                            Vector3 parentScale = transform.lossyScale;
                             Vector3 localPos = hit.point - transform.position;
-                            int x = Mathf.RoundToInt((localPos.x + offset) / cellSize);
-                            int y = Mathf.RoundToInt((localPos.y + offset) / cellSize);
+                            // 反缩放
+                            Vector3 unscaledLocalPos = new Vector3(
+                                parentScale.x != 0 ? localPos.x / parentScale.x : 0,
+                                parentScale.y != 0 ? localPos.y / parentScale.y : 0,
+                                0
+                            );
+                            int x = Mathf.RoundToInt((unscaledLocalPos.x + offset) / cellSize);
+                            int y = Mathf.RoundToInt((unscaledLocalPos.y + offset) / cellSize);
                             if (IsWithinBounds(x, y))
                             {
                                 StartGameAt(x, y);
@@ -331,11 +354,17 @@ namespace Games
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out var hit)) return;
 
-            // 修正：根据父物体transform和offset计算格子坐标
             float offset = (gridSize - 1) * cellSize / 2f;
+            Vector3 parentScale = transform.lossyScale;
             Vector3 localPos = hit.point - transform.position;
-            int x = Mathf.RoundToInt((localPos.x + offset) / cellSize);
-            int y = Mathf.RoundToInt((localPos.y + offset) / cellSize);
+            // 反缩放
+            Vector3 unscaledLocalPos = new Vector3(
+                parentScale.x != 0 ? localPos.x / parentScale.x : 0,
+                parentScale.y != 0 ? localPos.y / parentScale.y : 0,
+                0
+            );
+            int x = Mathf.RoundToInt((unscaledLocalPos.x + offset) / cellSize);
+            int y = Mathf.RoundToInt((unscaledLocalPos.y + offset) / cellSize);
             var direction = new Vector2Int(x - currentPosition.x, y - currentPosition.y);
 
             Debug.Log($"选择方向: {direction} {x} {y} {hit.point}");
@@ -392,6 +421,7 @@ namespace Games
             {
                 rr.sprite = emptySprite; // 清除上次的方向提示
                 rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration);
+                rr.DOColor(defaultCellColor, 0.6f).SetDelay(animationDuration); // 渐变恢复为默认颜色
             }
 
             lastDirectionRenderer.Clear();
@@ -402,14 +432,10 @@ namespace Games
                              cells[filledCellPos.x, filledCellPos.y].obj.GetComponent<SpriteRenderer>())
                          .Where(rr => rr != null))
             {
-                // var t = (Math.Atan((filledCount - barriers.Count - 1) * 1.0f /
-                // (gridSize * gridSize - barriers.Count - 1) * 2 - 1) / Math.PI * 2 + 1) / 2;
-
-                // var c = Color.Lerp(startSprite, currentSprite, (float)t);
-                // rr.material.DOColor(c, 0.6f).SetDelay(animationDuration * delayIndex);
                 rr.sprite = fillSprite;
-                rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                rr.color = new Color(fillSpriteColor.r, fillSpriteColor.g, fillSpriteColor.b, 0.5f);
                 rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                rr.DOColor(fillSpriteColor, 0.6f).SetDelay(animationDuration * delayIndex);
                 var cellTransform = rr.transform;
                 cellTransform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.3f, 1, 0.5f)
                     .SetDelay(animationDuration * delayIndex);
@@ -423,29 +449,71 @@ namespace Games
                 for (var y = 0; y < gridSize; y++)
                 {
                     var cell = cells[x, y];
-                    var rr = cells[x, y].obj.GetComponent<SpriteRenderer>();
+                    var rr = cell.obj.GetComponent<SpriteRenderer>();
                     if (rr == null) continue;
 
-                    if (cell.isCurrent)
+                    // 跳过未变化的cell（只对isCurrent、isStart、isFilled、isBarrier有动画）
+                    bool needAnim = false;
+                    if (cell.isBarrier && rr.sprite != barrierSprite) needAnim = true;
+                    else if (cell.isCurrent && rr.sprite != currentSprite) needAnim = true;
+                    else if (cell.isStart && rr.sprite != startSprite) needAnim = true;
+                    else if (cell.isFilled && rr.sprite != fillSprite) needAnim = true;
+                    else if (!cell.isBarrier && !cell.isCurrent && !cell.isStart && !cell.isFilled &&
+                             rr.sprite != emptySprite) needAnim = true;
+                    if (!needAnim) continue;
+
+                    if (cell.isBarrier)
+                    {
+                        rr.sprite = barrierSprite;
+                        rr.color = new Color(barrierSpriteColor.r, barrierSpriteColor.g, barrierSpriteColor.b, 0f);
+                        rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                        rr.DOColor(barrierSpriteColor, 0.6f).SetDelay(animationDuration * delayIndex);
+                    }
+                    else if (cell.isCurrent)
                     {
                         rr.sprite = currentSprite;
-                        rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
-                        rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                        if (fillSpriteColor != Color.white)
+                        {
+                            rr.color = new Color(fillSpriteColor.r, fillSpriteColor.g, fillSpriteColor.b, 0f);
+                            rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                            rr.DOColor(fillSpriteColor, 0.6f).SetDelay(animationDuration * delayIndex);
+                        }
+                        else
+                        {
+                            rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                            rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                            rr.DOColor(Color.white, 0.6f).SetDelay(animationDuration * delayIndex);
+                        }
                     }
                     else if (cell.isStart)
                     {
                         rr.sprite = startSprite;
-                        rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
-                        rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                        if (fillSpriteColor != Color.white)
+                        {
+                            rr.color = new Color(fillSpriteColor.r, fillSpriteColor.g, fillSpriteColor.b, 0f);
+                            rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                            rr.DOColor(fillSpriteColor, 0.6f).SetDelay(animationDuration * delayIndex);
+                        }
+                        else
+                        {
+                            rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                            rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                            rr.DOColor(Color.white, 0.6f).SetDelay(animationDuration * delayIndex);
+                        }
                     }
                     else if (cell.isFilled)
                     {
+                        rr.sprite = fillSprite;
+                        rr.color = new Color(fillSpriteColor.r, fillSpriteColor.g, fillSpriteColor.b, 0f);
+                        rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                        rr.DOColor(fillSpriteColor, 0.6f).SetDelay(animationDuration * delayIndex);
                     }
                     else
                     {
                         rr.sprite = emptySprite;
                         rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
                         rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                        rr.DOColor(Color.white, 0.6f).SetDelay(animationDuration * delayIndex);
                     }
                 }
             }
@@ -464,8 +532,9 @@ namespace Games
                 {
                     lastDirectionRenderer.Add(rr);
                     rr.sprite = availableSprite;
-                    rr.color = new Color(rr.color.r, rr.color.g, rr.color.b, 0f);
+                    rr.color = new Color(availableSpriteColor.r, availableSpriteColor.g, availableSpriteColor.b, 0f);
                     rr.DOFade(1.0f, 0.6f).SetDelay(animationDuration * delayIndex);
+                    rr.DOColor(availableSpriteColor, 0.6f).SetDelay(animationDuration * delayIndex);
                 }
             }
 
