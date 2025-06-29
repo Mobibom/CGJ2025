@@ -178,14 +178,14 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.1
-    width: 1.5270834
-    height: 0.3333333
+    y: 0.08120649
+    width: 1
+    height: 0.83526677
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 1.8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -332,33 +332,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2093909959762194492, guid: a000f54e3ea56b446824726404ab3579, type: 3}
-      propertyPath: m_SwitchToScene
-      value: 5
+    - target: {fileID: 339767450247460860, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.05
       objectReference: {fileID: 0}
-    - target: {fileID: 2321995830994441449, guid: a000f54e3ea56b446824726404ab3579, type: 3}
-      propertyPath: m_SwitchToScene
-      value: 9
+    - target: {fileID: 339767450247460860, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2668634910205236637, guid: a000f54e3ea56b446824726404ab3579, type: 3}
-      propertyPath: m_SwitchToScene
-      value: 9
+    - target: {fileID: 339767450247460860, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4076697424999503052, guid: a000f54e3ea56b446824726404ab3579, type: 3}
-      propertyPath: m_SwitchToScene
-      value: 9
+    - target: {fileID: 339767450247460860, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.686
+      objectReference: {fileID: 0}
+    - target: {fileID: 339767450247460860, guid: a000f54e3ea56b446824726404ab3579, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.929
       objectReference: {fileID: 0}
     - target: {fileID: 5568512894010537646, guid: a000f54e3ea56b446824726404ab3579, type: 3}
       propertyPath: m_Name
       value: House_MainMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 6079472022358564754, guid: a000f54e3ea56b446824726404ab3579, type: 3}
-      propertyPath: m_SwitchToScene
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7124339398767134787, guid: a000f54e3ea56b446824726404ab3579, type: 3}
-      propertyPath: m_SwitchToScene
-      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
