@@ -48,7 +48,7 @@ public class FatherRoom : MonoBehaviour
     public void OnPaintingConversationFinished()
     {
         Debug.Log("已点击画作");
-        Vector2 position = new Vector2(-3, -3);
+        Vector2 position = new Vector2(-2, (float)-1.5);
         EventCenter.GetInstance().EventTrigger("初始化华容道", position);
     }
 }
