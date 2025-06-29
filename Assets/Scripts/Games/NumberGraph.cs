@@ -43,7 +43,7 @@ public class NumberGraph : MonoBehaviour
         {
             for (int j = 0; j < matrixSize; j++)
             {
-                GameObject cell = Instantiate(cellPrefab, new Vector3(j + 2, -i + 2, 0), Quaternion.identity);
+                GameObject cell = Instantiate(cellPrefab, new Vector3(800 + j - 3, 200 - i - 3, 0), Quaternion.identity);
                 BoxCollider boxCollider = cell.AddComponent<BoxCollider>();
                 boxCollider.size = new Vector3(1, 1, 1);
                 cell.transform.SetParent(transform);
@@ -66,7 +66,7 @@ public class NumberGraph : MonoBehaviour
             }
         }
         EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
-        cellPrefab.transform.localPosition = new Vector3(10000f, 0.5f, 0);
+        cellPrefab.transform.position = new Vector3(10000f, 0.5f, 0);
     }
 
     void Update()

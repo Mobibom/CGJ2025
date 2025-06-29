@@ -6,7 +6,6 @@ using ProjectBase.Subtitle;
 public class ChamberlaiRoom : MonoBehaviour
 {
     public GameObject SceneLightMangager; // 确保在 Inspector 中赋值
-
     private SceneLightController slc;
     
     
@@ -23,25 +22,11 @@ public class ChamberlaiRoom : MonoBehaviour
     {
 
     }
-    
+
     public void OnBoxSubtitleFinished()
     {
         Debug.Log("box字幕已结束");
-        var instance = ResMgr.GetInstance().Load<GameObject>("Prefab/Games/NumberGraph");
-
-        var combinationLockGame = instance.GetComponentInChildren<NumberGraph>(true);
-        if (combinationLockGame == null)
-        {
-            Debug.LogWarning("未在实例下找到 NumberGraph 组件");
-            return;
-        }
-
-        combinationLockGame.SetFinishedCallback(() =>
-        {
-            Debug.Log("数字图游戏完成，触发下一步剧情");
-            GameFinished();
-            Destroy(instance);
-        });
+        GameFinished();
     }
 
     private void GameFinished()
@@ -54,7 +39,7 @@ public class ChamberlaiRoom : MonoBehaviour
             if (sr != null)
             {
                 // TODO: 切换图片
-                var newSprite = Resources.Load<Sprite>("Textures/Room/PriestRoom/guanjia2");
+                var newSprite = Resources.Load<Sprite>("Textures/Room/Chamberlam/guanjia2");
                 if (newSprite != null)
                 {
                     sr.sprite = newSprite;

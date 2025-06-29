@@ -469,6 +469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneLightMangager: {fileID: 0}
+  MainCamera: {fileID: 181342664}
 --- !u!1 &1388677685
 GameObject:
   m_ObjectHideFlags: 0
