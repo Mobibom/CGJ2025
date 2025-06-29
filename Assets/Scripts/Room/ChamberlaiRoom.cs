@@ -5,11 +5,18 @@ using ProjectBase.Subtitle;
 
 public class ChamberlaiRoom : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject SceneLightMangager; // 确保在 Inspector 中赋值
+
+    private SceneLightController slc;
+    
+    
     void Start()
     {
-
+        slc = SceneLightMangager.GetComponent<SceneLightController>();
+        slc.LerpAToB(1.5f); 
     }
+    
+    // 小游戏成功后调用slc.LerpBToc(1.5f);
 
     // Update is called once per frame
     void Update()
@@ -93,5 +100,7 @@ public class ChamberlaiRoom : MonoBehaviour
         {
             Debug.LogWarning("未找到Layer(Daughter)对象");
         }
+        
+        slc.LerpBToC(1.5f);
     }
 }
