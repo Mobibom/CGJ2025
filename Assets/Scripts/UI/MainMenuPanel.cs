@@ -53,18 +53,19 @@ public class MainMenuPanel : BasePanel
                 UIManager.GetInstance().HideAllPanel(() =>
                 {
                     var allSprites = FindObjectsOfType<SpriteRenderer>();
-                    var sequence = DOTween.Sequence();
-
-                    foreach (var sprite in allSprites)
-                    {
-                        // 为每个 sprite 添加 DOScale 到 sequence 中，并行执行（Join）
-                        sequence.Join(sprite.transform.DOScale(2.0f, 3.0f));
-                    }
-
-                    // 缩放结束后，显示 PrefacePanel
-                    sequence.AppendCallback(() => {
-                        UIManager.GetInstance().ShowPanel<PrefacePanel>("MainMenu/PrefacePanel", E_UI_Layer.Top);
-                    });
+                    // var sequence = DOTween.Sequence();
+                    //
+                    // foreach (var sprite in allSprites)
+                    // {
+                    //     // 为每个 sprite 添加 DOScale 到 sequence 中，并行执行（Join）
+                    //     sequence.Join(sprite.transform.DOScale(2.0f, 3.0f));
+                    // }
+                    //
+                    // // 缩放结束后，显示 PrefacePanel
+                    UIManager.GetInstance().ShowPanel<PrefacePanel>("MainMenu/PrefacePanel", E_UI_Layer.Top);
+                    // sequence.AppendCallback(() => {
+                    //     UIManager.GetInstance().ShowPanel<PrefacePanel>("MainMenu/PrefacePanel", E_UI_Layer.Top);
+                    // });
                 });
                 break;
 
