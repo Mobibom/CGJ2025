@@ -16,6 +16,17 @@ public class ClickableObject : MonoBehaviour
     [SerializeField] private List<DialogueEntry> dialogues3;
     [SerializeField] private List<DialogueEntry> dialogues4;
 
+    private void Start()
+    {
+        // 如果没有 EventSystem，则创建一个
+        if (UnityEngine.EventSystems.EventSystem.current == null)
+        {
+            var eventSystem = new GameObject("EventSystem");
+            eventSystem.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            eventSystem.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+        }
+    }
+
     private void OnMouseDown()
     {
         Debug.Log("点击了可交互物体: " + gameObject.name);
