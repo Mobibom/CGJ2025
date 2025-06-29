@@ -23,9 +23,6 @@ public enum Enum_SceneState
     HuaRongPuzzleGame,
     MatchThreeGame,
 
-    DauterRoom,
-    PriestRoom,
-
     Test,
 }
 
@@ -162,43 +159,34 @@ public class GameManager : BaseManager<GameManager>
     {
         Debug.Log("Priest_Room 场景加载完成");
         SceneState = Enum_SceneState.Priest_Room;
+        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
     }
     
     private void OnMrs_RoomSceneLoaded()
     {
         Debug.Log("Mrs_Room 场景加载完成");
         SceneState = Enum_SceneState.Mrs_Room;
+        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
     }
     
     private void OnGrandma_RoomSceneLoaded()
     {
         Debug.Log("Grandma_Room 场景加载完成");
         SceneState = Enum_SceneState.Grandma_Room;
+        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
     }
     
     private void OnFather_RoomSceneLoaded()
     {
         Debug.Log("Father_Room 场景加载完成");
         SceneState = Enum_SceneState.Father_Room;
+        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
     }
     
     private void OnDaughter_RoomSceneLoaded()
     {
         Debug.Log("Daughter_Room 场景加载完成");
         SceneState = Enum_SceneState.Daughter_Room;
-    }
-
-    private void OnDauterRoomSceneLoaded()
-    {
-        Debug.Log("DauterRoom 场景加载完成");
-        SceneState = Enum_SceneState.DauterRoom;
-        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
-    }
-
-    private void OnPriestRoomSceneLoaded()
-    {
-        Debug.Log("PriestRoom 场景加载完成");
-        SceneState = Enum_SceneState.PriestRoom;
         UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
     }
 
@@ -275,16 +263,6 @@ public class GameManager : BaseManager<GameManager>
             case Enum_SceneState.Daughter_Room:
                 data.callBack += OnDaughter_RoomSceneLoaded;
                 ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
-                break;
-
-            case Enum_SceneState.DauterRoom:
-                data.callBack += OnDauterRoomSceneLoaded;
-                ScenesMgr.GetInstance().LoadScene("Daughter_Room", data.callBack);
-                break;
-
-            case Enum_SceneState.PriestRoom:
-                data.callBack += OnPriestRoomSceneLoaded;
-                ScenesMgr.GetInstance().LoadScene("Priest_Room", data.callBack);
                 break;
 
             default:
