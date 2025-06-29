@@ -156,11 +156,11 @@ public class GameManager : BaseManager<GameManager>
         SceneState = Enum_SceneState.Test;
     }
     
-    
     private void OnChamberlai_RoomSceneLoaded()
     {
         Debug.Log("Chamberlai_Room 场景加载完成");
         SceneState = Enum_SceneState.Chamberlai_Room;
+        UIManager.GetInstance().ShowPanel<RoomPanel>("Room/RoomPanel", E_UI_Layer.Mid);
     }
     
     private void OnPriest_RoomSceneLoaded()

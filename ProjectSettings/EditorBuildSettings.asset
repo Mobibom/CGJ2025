@@ -38,4 +38,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Room/Daughter_Room.unity
     guid: c0743b259229e40b5a5e02d0edb51fe0
+  - enabled: 1
+    path: Assets/Scenes/Room/Chamberlai_Room.unity
+    guid: 646c7bf9c987945eebd3f04fc8f10901
+  - enabled: 1
+    path: Assets/Scenes/Room/Father_Room.unity
+    guid: afa28145087763c45b1d1f054b996590
+  - enabled: 1
+    path: Assets/Scenes/Room/Grandma_Room.unity
+    guid: b1daec0d029a2ae47b5eb5839e8712c1
   m_configObjects: {}
