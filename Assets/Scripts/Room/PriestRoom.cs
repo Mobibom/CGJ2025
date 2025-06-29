@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using Games;
+using ProjectBase.Subtitle;
 
 public class PriestRoom : MonoBehaviour
 {
@@ -18,21 +19,41 @@ public class PriestRoom : MonoBehaviour
     public void OnCrucifixSubtitleFinished()
     {
         Debug.Log("十字架字幕已结束");
-        var go = ResMgr.GetInstance().Load<GameObject>("Prefab/Games/FillColorGame");
-        if (go != null)
+        var instance = ResMgr.GetInstance().Load<GameObject>("Prefab/Games/FillColorGame");
+        // 在实例下查找 FillColorGame 组件
+        var fillColorGame = instance.GetComponentInChildren<FillColorGame>(true);
+        if (fillColorGame == null)
         {
-            var instance = Instantiate(go);
-            var canvasGroup = instance.GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
+            Debug.LogWarning("未在实例下找到 FillColorGame 组件");
+            return;
+        }
+
+        fillColorGame.SetFinishedCallback(() =>
+        {
+            if (fillColorGame.IsGameWin())
             {
-                canvasGroup = instance.AddComponent<CanvasGroup>();
+                Debug.Log("填色游戏完成，触发下一步剧情");
+                SubtitleMgr.GetInstance().ShowSubtitle(SubtitleType.Bubble, null,
+                    new List<DialogueEntry>
+                    {
+                        new()
+                        {
+                            name = "神父",
+                            content = "谢谢您大人，让我得以喘息",
+                            avatar = null
+                        },
+                    }, transform, Vector2.zero, () =>
+                    {
+                        Debug.Log("剧情结束回调");
+                        // 这里可以添加剧情结束后的逻辑
+                    });
             }
-            canvasGroup.alpha = 0f;
-            canvasGroup.DOFade(1f, 1f); // 使用DOTween实现1秒渐显
-        }
-        else
-        {
-            Debug.LogWarning("未能加载 FillColorGame 预制体");
-        }
+            else
+            {
+                Debug.Log("填色游戏未完成，重新开始");
+            }
+
+            Destroy(instance);
+        });
     }
 }

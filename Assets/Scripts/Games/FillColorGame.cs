@@ -47,6 +47,7 @@ namespace Games
         private List<Vector2Int> availableDirections = new();
         private readonly List<SpriteRenderer> lastDirectionRenderer = new();
         private GameObject cursor;
+        private Action onFinish;
 
         // Start is called before the first frame update
         void Start()
@@ -54,6 +55,21 @@ namespace Games
             EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", OnKeyDown);
             // EventCenter.GetInstance().AddEventListener<Vector3>("鼠标移动", OnMouseMove);
             ResetGame();
+        }
+
+        public void SetFinishedCallback(Action callback)
+        {
+            // 设置完成回调
+            if (callback != null)
+            {
+                onFinish = callback;
+            }
+        }
+
+        public bool IsGameWin()
+        {
+            // 检查游戏是否胜利
+            return isGameStarted && filledCount == gridSize * gridSize;
         }
 
         private void ResetGame()
@@ -186,13 +202,13 @@ namespace Games
             {
                 Debug.Log("游戏胜利！所有格子已填满！");
                 isGameOver = true;
-                // 可以添加胜利UI显示逻辑
+                onFinish?.Invoke();
             }
             else if (availableDirections.Count == 0)
             {
                 Debug.Log("游戏失败！无法继续移动。");
                 isGameOver = true;
-                // 可以添加失败UI显示逻辑
+                onFinish?.Invoke();
             }
         }
 
@@ -235,6 +251,7 @@ namespace Games
             switch (keyCode)
             {
                 case KeyCode.Mouse0: // 鼠标左键
+                {
                     Debug.Log("Left mouse button pressed.");
 
                     if (!isGameStarted)
@@ -267,6 +284,12 @@ namespace Games
                     }
 
                     break;
+                }
+                case KeyCode.Escape:
+                {
+                    onFinish?.Invoke();
+                    break;
+                }
             }
         }
 
