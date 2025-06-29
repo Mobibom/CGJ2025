@@ -1,0 +1,101 @@
+{ "skeleton": { "images": "E:/GJ2025/MainMenueHouse/" },
+"PhotoshopToSpine": { "scale": 1, "padding": 1, "trim": true },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "House", "bone": "root", "attachment": "House" },
+	{ "name": "Room1", "bone": "root", "attachment": "Room1" },
+	{ "name": "Room3", "bone": "root", "attachment": "Room3" },
+	{ "name": "Room4", "bone": "root", "attachment": "Room4" },
+	{ "name": "Room2", "bone": "root", "attachment": "Room2" },
+	{ "name": "Room5", "bone": "root", "attachment": "Room5" },
+	{ "name": "Room6", "bone": "root", "attachment": "Room6" },
+	{ "name": "WindowLight6", "bone": "root", "attachment": "WindowLight6" },
+	{ "name": "Window6", "bone": "root", "attachment": "Window6" },
+	{ "name": "WindowLight5", "bone": "root", "attachment": "WindowLight5" },
+	{ "name": "Window5", "bone": "root", "attachment": "Window5" },
+	{ "name": "WindowLight4", "bone": "root", "attachment": "WindowLight4" },
+	{ "name": "Window4", "bone": "root", "attachment": "Window4" },
+	{ "name": "WindowLight3", "bone": "root", "attachment": "WindowLight3" },
+	{ "name": "Window3", "bone": "root", "attachment": "Window3" },
+	{ "name": "WindowLight2", "bone": "root", "attachment": "WindowLight2" },
+	{ "name": "WindowBar2", "bone": "root", "attachment": "WindowBar2" },
+	{ "name": "WindowLight1", "bone": "root", "attachment": "WindowLight1" },
+	{ "name": "WindowBar1", "bone": "root", "attachment": "WindowBar1" },
+	{ "name": "Ground", "bone": "root", "attachment": "Ground" },
+	{ "name": "Tree1", "bone": "root", "attachment": "Tree1" },
+	{ "name": "Tree", "bone": "root", "attachment": "Tree" }
+],
+"skins": {
+	"default": {
+		"House": {
+			"House": { "x": 325.5, "y": -180.5, "width": 663, "height": 373 }
+		},
+		"Room1": {
+			"Room1": { "x": 130, "y": -208, "width": 88, "height": 136 }
+		},
+		"Room3": {
+			"Room3": { "x": 205.5, "y": -227.5, "width": 67, "height": 97 }
+		},
+		"Room4": {
+			"Room4": { "x": 269, "y": -193, "width": 64, "height": 166 }
+		},
+		"Room2": {
+			"Room2": { "x": 206, "y": -97.5, "width": 68, "height": 167 }
+		},
+		"Room5": {
+			"Room5": { "x": 386, "y": -176, "width": 70, "height": 198 }
+		},
+		"Room6": {
+			"Room6": { "x": 459.5, "y": -177.5, "width": 81, "height": 199 }
+		},
+		"WindowLight6": {
+			"WindowLight6": { "x": 452, "y": -212, "width": 16, "height": 40 }
+		},
+		"Window6": {
+			"Window6": { "x": 452.5, "y": -211.5, "width": 25, "height": 47 }
+		},
+		"WindowLight5": {
+			"WindowLight5": { "x": 394, "y": -212, "width": 16, "height": 40 }
+		},
+		"Window5": {
+			"Window5": { "x": 394, "y": -211.5, "width": 24, "height": 47 }
+		},
+		"WindowLight4": {
+			"WindowLight4": { "x": 278, "y": -212, "width": 16, "height": 40 }
+		},
+		"Window4": {
+			"Window4": { "x": 278.5, "y": -211.5, "width": 25, "height": 47 }
+		},
+		"WindowLight3": {
+			"WindowLight3": { "x": 207, "y": -210, "width": 24, "height": 50 }
+		},
+		"Window3": {
+			"Window3": { "x": 207, "y": -210, "width": 24, "height": 50 }
+		},
+		"WindowLight2": {
+			"WindowLight2": { "x": 207, "y": -124, "width": 16, "height": 42 }
+		},
+		"WindowBar2": {
+			"WindowBar2": { "x": 207, "y": -123.5, "width": 24, "height": 47 }
+		},
+		"WindowLight1": {
+			"WindowLight1": { "x": 123, "y": -212, "width": 16, "height": 42 }
+		},
+		"WindowBar1": {
+			"WindowBar1": { "x": 124.5, "y": -211.5, "width": 25, "height": 47 }
+		},
+		"Ground": {
+			"Ground": { "x": 320, "y": -318, "width": 642, "height": 88 }
+		},
+		"Tree1": {
+			"Tree1": { "x": 52.5, "y": -236, "width": 35, "height": 98 }
+		},
+		"Tree": {
+			"Tree": { "x": 350.5, "y": -150.5, "width": 581, "height": 277 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

@@ -8,6 +8,8 @@ public class RoomBlockHandle : MonoBehaviour
     [SerializeField]
     public Enum_SceneState m_SwitchToScene;
 
+    [Header("窗户")] public GameObject windowLight;
+
     
     [Header("高亮渐变时间（秒）")]
     public float transitionTime = 0.2f;
@@ -59,18 +61,21 @@ public class RoomBlockHandle : MonoBehaviour
     private void Awake()
     {
         var sr = GetComponent<SpriteRenderer>();
-        _mat = sr.material;
-        if (_mat.HasProperty("_HightLightStrength"))
-        {
-            _currentValue = _mat.GetFloat("_HightLightStrength");
-        }
+        // _mat = sr.material;
+        // if (_mat.HasProperty("_HightLightStrength"))
+        // {
+        //     _currentValue = _mat.GetFloat("_HightLightStrength");
+        // }
+        
+        windowLight.SetActive(false);
     }
 
     private void OnMouseEnter()
     {
         m_IsMouseEntered = true;
-        hightLightStrength = 0.15f;
-        _targetValue = hightLightStrength;
+        // hightLightStrength = 0.15f;
+        // _targetValue = hightLightStrength;
+        windowLight.SetActive(true);
     }
 
     // private void OnMouseDown()
@@ -81,16 +86,17 @@ public class RoomBlockHandle : MonoBehaviour
     private void OnMouseExit()
     {
         m_IsMouseEntered = false;
-        _targetValue = 0f;
+        // _targetValue = 0f;
+        windowLight.SetActive(false);
     }
 
     private void Update()
     {
-        if (_mat == null || !_mat.HasProperty("_HightLightStrength"))
-            return;
-
-        // 平滑插值（基于时间）
-        _currentValue = Mathf.MoveTowards(_currentValue, _targetValue, Time.deltaTime / transitionTime);
-        _mat.SetFloat("_HightLightStrength", _currentValue);
+        // if (_mat == null || !_mat.HasProperty("_HightLightStrength"))
+        //     return;
+        //
+        // // 平滑插值（基于时间）
+        // _currentValue = Mathf.MoveTowards(_currentValue, _targetValue, Time.deltaTime / transitionTime);
+        // _mat.SetFloat("_HightLightStrength", _currentValue);
     }
 }

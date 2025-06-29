@@ -12,6 +12,7 @@ namespace RoomData
         public Sprite sprite;      // 用户拖入的图
         public int orderInLayer;   // 层级排序
         public Enum_SceneState gameState = Enum_SceneState.DemoRoom;
-        
+        public bool needHighlight = false;
+
     }
 }

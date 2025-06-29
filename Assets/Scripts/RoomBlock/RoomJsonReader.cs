@@ -96,13 +96,18 @@ public class RoomJsonReader : MonoBehaviour
             }
 
             sr.material = variantMat;
-            var highLighter = go.AddComponent<RoomBlockHandle>();
-            highLighter.hightLightStrength =  hightStrength;
-            highLighter.transitionTime = highlightTransitionTime;
-            highLighter.m_SwitchToScene = block.gameState; 
+            if (block.needHighlight)
+            {
+                var highLighter = go.AddComponent<RoomBlockHandle>();
+                highLighter.hightLightStrength =  hightStrength;
+                highLighter.transitionTime = highlightTransitionTime;
+                highLighter.m_SwitchToScene = block.gameState; 
+                BoxCollider2D col = go.AddComponent<BoxCollider2D>();
+                col.isTrigger = true; 
+            }
             
-            BoxCollider2D col = go.AddComponent<BoxCollider2D>();
-            col.isTrigger = true; 
+            
+            
 
         }
         
