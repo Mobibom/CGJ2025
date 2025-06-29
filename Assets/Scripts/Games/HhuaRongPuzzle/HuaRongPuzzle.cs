@@ -21,7 +21,7 @@ namespace Games.HhuaRongPuzzle
         [SerializeField] private bool useCustomLayout = true;
     
         private readonly int gridSize = 3;
-        private readonly float cellSize = 1f;
+        private readonly float cellSize = 2f;
         private readonly Color tileColor = Color.white;
         private readonly Color emptyColor = Color.clear;
         private bool isAnimating;
@@ -35,8 +35,6 @@ namespace Games.HhuaRongPuzzle
             EventCenter.GetInstance().AddEventListener<Vector2>("初始化华容道", InitializeGame);
             EventCenter.GetInstance().AddEventListener<KeyCode>("某键按下", HandleMouseClick);
             EventCenter.GetInstance().AddEventListener<Vector2>("重置华容道",ResetHuaRongPuzzle);
-        
-            EventCenter.GetInstance().EventTrigger("初始化华容道", Vector2.zero);
         }
         private void InitializeGame(Vector2 originPoint)
         {
